@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Editor de Tiles</title>
+        
+        <style>
+            header {display: flex; justify-content: stretch; padding: 3px; user-select: none;}
+            main { padding-top: 3px; }
+            body {
+                display: block;
+                position: relative;
+                border: 1px; border-style: solid; 
+                border-collapse:collapse;
+            }
+            .arquivo {user-select:text;}
+            .menu__ferramenta {
+                padding: 5px; padding-bottom: 0; 
+                user-select: none; position: relative;
+            }
+            .menu__modalbox 
+            {
+                background-color: gray;
+                display: none;
+                position: absolute;
+                flex-direction: row;
+                z-index: 1;
+                left: 0px;
+                width: 200px;
+                height: 300px;
+                padding: 0px;
+            }
+
+            .menu__modalbox__ferramenta 
+            {
+                display: flex;
+                flex-grow: 1;
+                vertical-align: middle;
+                padding: 5px;
+                
+            }
+            .documento {display: block; flex-grow: 1; flex-direction: column; user-select: none;}
+            .documento__ferramentas {border: 0px; border-style: solid; border-bottom: 1px; padding: 5px;}
+            .documento__ferramenta {padding: 5px; }
+            .documento__aba {display: block; border: 0px;}
+            .documento__conteudo {display: flex; min-height: 500px; flex-direction: row; border-top: 0px;}
+            .documento__conteudo__ferramentas {display: block; padding: 10px; min-width: 200px; height:auto;}
+            .documento__conteudo__edicao {display: block; flex-grow: 1;}
+            td > div {
+                display: block;
+                position: relative;
+                
+                /*left: 0px; width: 50px; height: 50px;*/
+                margin: 5px;
+                padding: 5px;
+                justify-content: center;
+                
+                /**/
+                background-color: black;
+            }
+            td > div:hover {
+                background-color: gray;
+            }
+            
+            td > div > img { 
+                display:flex;
+                object-fit: contain;
+                flex-shrink: 1;
+                width: 50px;
+                height: 50px;
+                -webkit-mask-image: url(images/iconpadrao.svg);
+                mask-image: url(images/iconpadrao.svg);
+                -webkit-mask-origin: margin-box;
+                mask-origin:margin-box;
+                mask-size: cover;
+                -webkit-mask-size:cover;
+            }
+            div > span > img {
+                display: flex;
+                padding-right: 5px;
+                vertical-align: text-bottom;
+
+                width: 15px;
+                height: 15px;
+            }
+
+            .menu__windowbox {
+                background-color: rgb(43, 43, 43, .5);
+                display: block;
+                position: absolute;
+                justify-self: center;
+                align-content: center;
+                flex-direction: row;
+                z-index: 2;
+                left: 0px;
+                flex-grow: 1;
+                width: 100%;
+                height: 100%;
+                padding: 0px;
+            }
+            .menu__windowbox__child {
+                
+                display: flex;
+                position: relative;
+                justify-content: center;
+                top: 25%;
+                overflow: auto;
+                margin: auto;
+                width: 100%;
+                height: 100%;
+                flex-direction: row;
+                flex-grow: 1;
+                
+            }
+
+            .menu__windowbox__container
+            {
+                display: block;
+                background-color: gold;
+                flex-grow: 0;
+                width: 50%;
+                height: 50%;
+                text-align: center;
+            }
+
+            .menu__windowbox__container > button {
+                display: block;
+                align-self: flex-end;
+            }
+
+        </style>
+        <script src="scripts/loadobject.js"></script>
+        <link name="estilo" id="estilo" rel="stylesheet" href="styles/styleBlue.css">
+    </head>
+    <body>
+        <header>
+            <svg id="space" viewBox="-10 -10 20 20" width="15px">
+                <polygon stroke="black" fill="gray" points="-8,-8 -8,10 8,10">    
+                </polygon>
+                <polygon stroke="black" fill="lightgray" points="8,-8 -8,-8 8,10">    
+                </polygon>
+            </svg>
+            <span style="padding-left: 5px; padding-right: 5px;">Editor de Tiles - </span>
+            <span class="arquivo">exemplo.xml</span>
+        </header>
+        <nav class="menu" style="display:flex; flex-direction: row;">
+            <span class="menu__ferramenta" onpointerdown="OnEnterMenu(0)" onpointerleave="OnExitMenu(0)">
+                <span style="text-decoration: underline;">F</span>icheiro
+                <div id="menu-ficheiro" class="menu__modalbox" onclick="menuSelect(0, 0)">
+                    <span class="menu__modalbox__ferramenta">
+                        <img src="images/aula14ex2screenshot.png" />
+                        <span>Novo</span>
+                    </span>
+                </div>
+            </span>
+            <span class="menu__ferramenta" onpointerdown="OnEnterMenu(1)" onpointerleave="OnExitMenu(1)">
+                <span style="text-decoration: underline;">E</span>ditar
+                <div id="menu-editar" class="menu__modalbox">
+                    <span class="menu__modalbox__ferramenta">
+                        <img src="images/aula14ex2screenshot2.png" />
+                        <span>Desfazer</span>
+                    </span>
+                </div>
+            </span>
+            <!--<span class="menu__ferramenta" ><span style="text-decoration: underline;">V</span>er</span>
+            <span class="menu__ferramenta" ><span style="text-decoration: underline;">M</span>undo</span>
+            <span class="menu__ferramenta" ><span style="text-decoration: underline;">M</span>apa</span>
+            <span class="menu__ferramenta" ><span style="text-decoration: underline;">C</span>amada</span>
+            <span class="menu__ferramenta" ><span style="text-decoration: underline;">P</span>rojeto</span>
+            <span class="menu__ferramenta" ><span style="text-decoration: underline;">A</span>juda</span>-->
+        </nav>
+        <main>
+            <section class="documento">
+                <span class="documento__aba" style="width: fit-content; padding: 5px; margin-left: 3px; border-top-left-radius: 5px; border-top-right-radius: 5px;">exemplo.xml</span>
+                <article class="documento__aba">
+                    <nav class="documento__ferramentas">
+                        <span class="documento__ferramenta">Novo</span>
+                        <span class="documento__ferramenta">Abrir</span>
+                        <span class="documento__ferramenta">Salvar</span> 
+                        |
+                        <span class="documento__ferramenta">Pintar</span>
+                        <span class="documento__ferramenta">Preencher</span>
+                        |
+                        <span class="documento__ferramenta">Selecionar</span>
+                        <span class="documento__ferramenta">Mover</span>
+                    </nav>
+                    <div class="documento__conteudo">
+                        <div class="documento__conteudo__edicao">
+                            <canvas width="100">
+                                
+                            </canvas>
+                        </div>
+                        <div class="documento__conteudo__ferramentas">
+                            <span>Escolha um dos Styles:</span>
+                            <a href="styles/styleGreen.css" target="estilo">Verde</a>
+                            <table>
+                                <th>
+                                    <td>
+                                        <div onclick="OnClickEstilo(0)">
+                                            <img src="images/aula14ex2screenshot.png" />
+       
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div onclick="OnClickEstilo(1)">
+                                            <img src="images/aula14ex2screenshot2.png" />
+                                   
+                                        </div>
+                                    </td>
+                                </th>
+                            </table>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+        <aside>
+           
+        </aside>
+    </body>
+    <script>
+        var body = document.body;
+
+        //#region Styles
+        var estiloLink = document.getElementById("estilo");
+        var styles = 
+        [
+            "styles/styleGreen.css", 
+            "styles/styleBlue.css"
+        ];
+
+        function OnClickEstilo(indice)
+        {
+            estiloLink.href = styles[indice];
+        }
+        //#endregion
+        //#region Menu 
+        var modalWindows = 
+        [
+            document.getElementById("menu-ficheiro"),
+            document.getElementById("menu-editar")
+        ];
+        var modalPosX = 0;
+        function OnEnterMenu(indice)
+        {
+            let modal = modalWindows[indice];
+            modalPosX = modal.parentElement.style.left-10;
+            modal.style.display = "block";
+        }
+        function OnExitMenu(indice)
+        {
+            modalWindows[indice].style.display = "none";
+        }
+        
+        var menuSelections = 
+        [
+            [
+                WindowCreateMapa,
+                evt => {},
+                evt => {},
+                evt => {},
+            ]
+        ];
+
+        function menuSelect (i, j)
+        {
+            menuSelections[i][j]();
+        }
+
+        //#endregion
+        //#region Mapa
+        var map = document.createElement("mapa");
+        map.id = "mapa";
+
+        function WindowCreateMapa (evt)
+        {
+            console.log("Clicou");
+            
+            let popupWindow = document.createElement("div");
+            //mapcreation.data = "mapcreation.html";
+            popupWindow.classList.add("menu__windowbox");
+            LoadHTML("mapcreation.html", x => {popupWindow.append(x);});
+            //
+            //mapcreation.offsetTop.valueOf(window.innerWidth/2);
+            body.insertBefore(popupWindow, body.firstChild);
+            
+            //mapcreation.tabIndex = 0;
+        }
+
+        function CreateMapa () 
+        {
+
+        }
+        //#endregion
+    </script>
+</html>

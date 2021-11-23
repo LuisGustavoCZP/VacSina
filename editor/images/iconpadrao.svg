@@ -1,0 +1,10 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+	<title>iconpadrao-svg</title>
+	<defs>
+		<image  width="216" height="216" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAADYAQMAAACz7r+uAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAAAAAApWe5zwAAAAJ0Uk5TAP9bkSK1AAAA+UlEQVR4nO3YMQ6CQBSEYYyFpUd4R+FocDSO4hEstyAgK6wmMjNrsDKZ137Ne7vd3zTLxPw5qSmjrNvZ9LIdzXOhM7BhsyuwO13lvUwLbPzCAJVFT9D6p12g3egJ5YiAluiaZVFlHbSJn7ceiH4hz0DPWw/E560HBrFUsZbYWLGO2MR+L09PT8/HK2PPkh9GGXuy/GhBLdHT8/HKKC0/b7PZbDabzWaz2Ww2m+2/raWke0FQS7JdHO0hR/uLajqqBR3uS0Gs1rNUI1NtTTU59vPVBthCq3fFgJaqjVO1UdVU8YE/9t0AVpqxas1o0W1N2bZlE98vU+3sD7QLjsZpgjUFAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="img2" href="#img1" x="20" y="20" />
+</svg>

@@ -1,0 +1,35 @@
+header {background-color:#1a2d06; color: white;}
+.arquivo {color:#20df50}
+.menu {background-color:#99e54d;}
+/*.menu__ferramenta {}*/
+.menu__ferramenta:hover {background-color:#20df50; color: black; }
+main { background-color:#b3ec79; }
+.documento__aba {background-color:#d0d8c7; border-style: solid;}
+.documento__ferramenta {color:black;}
+.documento__ferramenta:hover {background-color:#20df50; color: black; user-select: none;}
+.documento__conteudo {background-color:aliceblue;}
+.documento__conteudo__ferramentas {background-color:#99e54d}
+.documento__conteudo__edicao {background-color:#ccf2a6}
+.menu__modalbox {
+    background-color:#99e54d;
+}
+.menu__modalbox__ferramenta 
+{
+    color:white;
+}
+.menu__modalbox__ferramenta:hover 
+{
+    background-color:#20df50; 
+    color: white; 
+}
+td > div {
+
+}
+td > div > img { 
+
+}
+
+.menu__windowbox__container
+{
+    background-color: #99e54d;
+}

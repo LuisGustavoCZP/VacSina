@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Aprendendo Canvas</title>
+        <style>
+            canvas {border:solid black 1px; background-image: url("mapa.png"); background-repeat: no-repeat; background-size: cover;}
+        </style>
+        <script src="gosprite.js"></script>
+        <script src="rpgobjetos.js"></script>
+        <script src="rpgmanager.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="600"></canvas>
+        <script>
+            var canvas = document.querySelector("canvas");
+            var ctx = canvas.getContext("2d");
+            
+            let defaultFrame = new SpriteFrame(16,16,1);
+            var gameObjetos = 
+            [
+                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 23), 0, 0, 64, 0, false, 2, 1),
+                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 104), 250, 50, 64, 0, false, 2, 3), 
+                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 185), 50, 250, 64, 0, false, 2, .5),
+                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 266), 50, 50, 64, 0, false, 3, 1),
+            ];
+            tiles = [
+                //new PhysicObjeto(new GOSprite(defaultFrame, "sprites/tilemap_packed.png", 0), 0, 0, 64, 0, true),
+            ]
+            var rpgmanager = new RPGManager (canvas, ctx, gameObjetos, tiles);
+            
+            function gameloop ()
+            {
+                window.requestAnimationFrame(gameloop, canvas);
+                rpgmanager.gameloop();
+            }
+
+            function mouseClick (e){
+                //let gameObjeto = gameObjetos[jogador];
+                let iat = rpgmanager.iaTargets;
+                //console.log(iat + "," + rpgmanager.jogador);
+                let tgt = iat[rpgmanager.jogador];
+                //console.log(tgt);
+                let pos = rpgmanager.canvas.getBoundingClientRect();
+                let offsetX = - pos.left;
+                let offsetY = - pos.top;
+                
+                tgt.positionX = e.clientX-(rpgmanager.canvas.width/2)+offsetX;
+                tgt.positionY = e.clientY-(rpgmanager.canvas.height/2)+offsetY;
+            }
+
+            gameloop();
+
+            window.addEventListener("click", mouseClick, false);
+
+        </script>
+    </body>
+</html>

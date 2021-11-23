@@ -1,0 +1,36 @@
+header {background-color:aquamarine; color: black;}
+.arquivo {color:darkblue}
+.menu {background-color:cadetblue;}
+.menu__ferramenta {color:midnightblue;}
+.menu__ferramenta:hover {background-color:darkblue; color: white; }
+main { background-color:darkcyan; }
+.documento__aba {background-color:cadetblue; border-style: solid; }
+.documento__ferramenta {color:midnightblue;}
+.documento__ferramenta:hover {background-color:darkblue; color: white; user-select: none;}
+.documento__conteudo {background-color:aliceblue;}
+.documento__conteudo__ferramentas {background-color:cadetblue}
+.documento__conteudo__edicao {background-color:gainsboro}
+.menu__modalbox 
+{
+    background-color:cadetblue;
+}
+.menu__modalbox__ferramenta 
+{
+    color:midnightblue;
+}
+.menu__modalbox__ferramenta:hover 
+{
+    background-color:darkblue; 
+    color: white; 
+}
+td > div {
+
+}
+td > div > img { 
+
+}
+
+.menu__windowbox__container
+{
+    background-color: cadetblue;
+}
