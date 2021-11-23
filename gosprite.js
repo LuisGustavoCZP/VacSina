@@ -72,7 +72,7 @@ class AnimatedSprite extends GOSprite
     draw(context, posX, posY, size) {
         let hsize = size / 2;
         posX = posX - hsize;
-        posY = posY - hsize;
+        posY = posY - size;
 
         if(this.readyDraw)
         {
