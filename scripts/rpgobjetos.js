@@ -121,22 +121,43 @@ class Character extends DynamicObjeto
 
     static Load (data)
     {
-        console.log(data);
-        return new Character(new AnimatedSprite(super.defaultFrame, data.sprite.src, data.sprite.index), data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed);
+        let sp = SpriteSource.Load(data.spriteSource);
+        
+        let anim = new AnimatedSprite(super.defaultFrame, sp);
+        
+        console.log(anim);
+
+        return new Character(anim, data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed);
     }
 }
 
-class Tile extends PhysicObjeto
+class Tile extends Objeto
 {
-    constructor (sprite, positionX, positionY, size, rotation, isTrigger)
+    constructor (posX, posY, type)
     {
-        super(sprite, positionX, positionY, size, rotation, isTrigger);
-        this.colliding = false;
-        this.collisions = [];
+        super(posX, posY);
+        this.type = type;
     }
 
     static Load (data)
     {
-        new Tile(data.sprite, data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed);
+        return new Tile(data.type, data.positionX, data.positionY);
+    }
+}
+
+class TilePrefab
+{
+    constructor (spriteSource, size, block)
+    {
+        this.sprite = new GOSprite(defaultFrame, spriteSource);
+        this.size = size;
+        this.block = block;
+    }
+
+    static defaultFrame = new SpriteFrame(16,16,1);
+
+    static Load (data)
+    {
+        return new Tile(SpriteSource.Load(data.spriteSource), data.positionX, data.positionY);
     }
 }

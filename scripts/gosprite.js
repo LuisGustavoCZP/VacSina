@@ -7,9 +7,23 @@ class SpriteFrame
     }
 }
 
-class GOSprite 
+class SpriteSource {
+    constructor (src, index){
+        
+        //console.log(src + " : " + index);
+        this.src = src;
+        this.index = index;
+    }
+
+    static Load (data)
+    {
+        return new SpriteSource(data.src, data.id);
+    }
+}
+
+class GOSprite
 { 
-    constructor (spriteFrame, source, id){
+    constructor (spriteFrame, spriteSource){
         this.spriteFrame = spriteFrame;
         this.spriteSheet = new Image();
         this.readyDraw = false;
@@ -26,8 +40,8 @@ class GOSprite
         {
             this.readyDraw = false;
         }
-        this.spriteSheet.src = source;
-        this.index = id;
+        this.index = spriteSource.index;
+        this.spriteSheet.src = spriteSource.src;
     }
 
     draw(context, posX, posY, size) {
@@ -61,12 +75,14 @@ class GOSprite
 
 class AnimatedSprite extends GOSprite
 { 
-    constructor (spriteFrame, source, id){
-        super(spriteFrame, source, id);
+    constructor (spriteFrame, spriteSource){
+        super(spriteFrame, spriteSource);
         this.animation = 0;
         this.frame = 0;
         this.frameReal = 0;
         this.playing = 0;
+        
+        console.log(spriteSource);
     }
 
     draw(context, posX, posY, size) {

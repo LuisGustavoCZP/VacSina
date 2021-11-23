@@ -12,6 +12,29 @@ class RPGManager
         }
     }
 
+    
+
+    LoadCharacters (list, path) {
+        LoadJSON (path, data =>
+        {
+            for(let i = 0; i < data.length; i++){
+                let obj = Character.Load(data[i]);
+                list.push(obj);
+            }
+        });
+    }
+
+    LoadMap (map, path) {
+        LoadJSON (path, data =>
+        {
+            map = {name:data.name, tiles:[]}
+            for(let i = 0; i < data.tiles.length; i++){
+                let obj = Tile.Load(data.tiles[i]);
+                map.tiles.push(obj);
+            }
+        });
+    }
+
     updateIAControls()
     {
         for(let i = 0; i < this.gameObjetos.length; i++){

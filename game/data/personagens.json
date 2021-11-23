@@ -2,9 +2,9 @@
     {
         "type":"character",
         "name":"Player",
-        "sprite": {
+        "spriteSource": {
             "src":"sprites/tilemap_packed.png",
-            "index":23
+            "id":23
         },
         "size":64,
         "positionX": 0,
@@ -17,9 +17,9 @@
     {
         "type":"character",
         "name":"Jose",
-        "sprite": {
+        "spriteSource": {
             "src":"sprites/tilemap_packed.png",
-            "index":104
+            "id":104
         },
         "size":64,
         "positionX": 250,

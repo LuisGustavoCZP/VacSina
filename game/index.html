@@ -15,30 +15,15 @@
         <script>
             var canvas = document.querySelector("canvas");
             var ctx = canvas.getContext("2d");
-            function LoadCharacters () {
-                LoadJSON ("data/personagens.json", data =>
-                {
-                    for(i = 0; i < data.length; i++){
-                        let obj = Character.Load(data[i]);
-                        gameObjetos[i] = obj;
-                        console.log(obj);
-                        //if(obj != undefined) gameObjetos.push(obj);
-                    }
-                });
-            }
 
             /*new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 23), 0, 0, 64, 0, false, 2, 1),
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 104), 250, 50, 64, 0, false, 2, 3), 
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 185), 50, 250, 64, 0, false, 2, .5),
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 266), 50, 50, 64, 0, false, 3, 1),*/
             
+            var map;
+            var tiles = [];
             var gameObjetos = [];
-
-            LoadCharacters ();
-
-            tiles = [
-                //new PhysicObjeto(new GOSprite(defaultFrame, "sprites/tilemap_packed.png", 0), 0, 0, 64, 0, true),
-            ]
             
             var rpgmanager = new RPGManager (canvas, ctx, gameObjetos, tiles);
             
@@ -61,6 +46,10 @@
                 tgt.positionX = e.clientX-(rpgmanager.canvas.width/2)+offsetX;
                 tgt.positionY = e.clientY-(rpgmanager.canvas.height/2)+offsetY;
             }
+
+            rpgmanager.LoadCharacters (gameObjetos, "data/personagens.json");
+            
+            //rpgmanager.LoadMap (map, "data/mapa1.json");
 
             gameloop();
             window.addEventListener("click", mouseClick, false);

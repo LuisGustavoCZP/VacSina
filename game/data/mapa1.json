@@ -1,0 +1,26 @@
+{
+    "name":"Mapa1",
+    "tiles": [
+        {
+            "type":0,
+            "positionX": -32,
+            "positionY": -32
+        },
+        {
+            "type":0,
+            "positionX": 32,
+            "positionY": -32
+        },
+        {
+            "type":0,
+            "positionX": -32,
+            "positionY": 32
+        },
+        {
+            "type":0,
+            "positionX": 32,
+            "positionY": 32
+        }
+    ]
+    
+}
