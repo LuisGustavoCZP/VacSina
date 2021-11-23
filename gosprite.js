@@ -5,9 +5,6 @@ class SpriteFrame
         this.height = height;
         this.space = space;
     }
-    width;
-    height;
-    space;
 }
 
 class GOSprite 
@@ -32,12 +29,6 @@ class GOSprite
         this.spriteSheet.src = source;
         this.index = id;
     }
-    spriteFrame;
-    spriteSheet;
-    width;
-    height;
-    index;
-    readyDraw;
 
     draw(context, posX, posY, size) {
         let hsize = size / 2;
@@ -75,10 +66,8 @@ class AnimatedSprite extends GOSprite
         this.animation = 0;
         this.frame = 0;
         this.frameReal = 0;
+        this.playing = 0;
     }
-    animation;
-    frame;
-    frameReal;
 
     draw(context, posX, posY, size) {
         let hsize = size / 2;
@@ -91,13 +80,19 @@ class AnimatedSprite extends GOSprite
             let fh = this.spriteFrame.height;
             let fs = this.spriteFrame.space;
             let maxColum = Math.ceil(this.spriteSheet.width / (fw));
-            this.frameReal++;
-            if(this.frameReal > 10) 
+            if(this.playing)
             {
-                this.frameReal=0;
-                this.frame += 1;
-                if(this.frame >= 3) this.frame = 0;
+                this.frameReal++;
+                if(this.frameReal > 10) 
+                {
+                    this.frameReal=0;
+                    this.frame += 1;
+                    if(this.frame >= 3) this.frame = 0;
+                }
+            } else {
+                this.frame = 0;
             }
+
             let frameIndex = this.index + this.animation + (this.frame*maxColum);
             let x = frameIndex % maxColum, y = (frameIndex - x) / maxColum;
             let fx = (fw * x);

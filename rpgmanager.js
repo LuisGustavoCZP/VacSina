@@ -12,16 +12,6 @@ class RPGManager
         }
     }
 
-    canvas;
-    context2D;
-    tiles;
-    gameObjetos;
-    jogador;    
-    iaTargets;
-
-    //window.addEventListener("keydown", keyDownHandler, false)
-    //window.addEventListener("keyup", keyUpHandler, false)
-
     updateIAControls()
     {
         for(let i = 0; i < this.gameObjetos.length; i++){
@@ -43,13 +33,15 @@ class RPGManager
                 if(i == this.jogador){
                     //tgt.positionX = gameObjeto.positionX;
                     //tgt.positionY = gameObjeto.positionY;
+                    gameObjeto.directionX = 0;
+                    gameObjeto.directionY = 0;
+                    continue;
                 }
                 else
                 {
                     tgt.positionX = (Math.random()-.5)*this.canvas.width;
                     tgt.positionY = (Math.random()-.5)*this.canvas.height;
                 }
-                continue;
             }
 
             dirX = maxDist > 0 ? dirX / maxDist : 0;

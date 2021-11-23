@@ -40,8 +40,10 @@
                 //console.log(iat + "," + rpgmanager.jogador);
                 let tgt = iat[rpgmanager.jogador];
                 //console.log(tgt);
-                var offsetX = - rpgmanager.canvas.offsetLeft;
-                var offsetY = - rpgmanager.canvas.offsetTop;
+                let pos = rpgmanager.canvas.getBoundingClientRect();
+                let offsetX = - pos.left;
+                let offsetY = - pos.top;
+                
                 tgt.positionX = e.clientX-(rpgmanager.canvas.width/2)+offsetX;
                 tgt.positionY = e.clientY-(rpgmanager.canvas.height/2)+offsetY;
             }

@@ -4,8 +4,6 @@ class Objeto
         this.positionX = posX;
         this.positionY = posY;
     }
-    positionX;
-    positionY;
 }
 
 class GameObjeto extends Objeto
@@ -17,10 +15,6 @@ class GameObjeto extends Objeto
         this.sprite = sprite;
         this.rotation = rot;
     }
-
-    size;
-    sprite;
-    rotation;
 
     draw(canvas, context) {
         let hsize = this.size / 2;
@@ -45,10 +39,6 @@ class PhysicObjeto extends GameObjeto
         this.collisions = [];
         this.isTrigger = isTrigger;
     }
-
-    isTrigger;
-    colliding;
-    collisions;
 
     collision (other){
         if(!this.isTrigger && (this.positionX + this.size > other.positionX 
@@ -79,11 +69,6 @@ class DynamicObjeto extends PhysicObjeto
         this.directionY = 0;
     }
 
-    speedRot;
-    speed;
-    directionX;
-    directionY;
-
     update()
     {
         let velX = this.directionX*this.speed, velY = this.directionY*this.speed;
@@ -97,25 +82,27 @@ class DynamicObjeto extends PhysicObjeto
         let vYmod = Math.abs(velY);
 
         if(vXmod + vYmod == 0){
-
-        } 
-        else if(vXmod <= vYmod) 
-        {
-            if(velY > 0) {
-                this.sprite.animation = 1;
+            this.sprite.playing = false;
+        } else {
+            if(vXmod <= vYmod) 
+            {
+                if(velY > 0) {
+                    this.sprite.animation = 1;
+                }
+                else if(velY < 0) {
+                    this.sprite.animation = 2;
+                }
+            } 
+            else if(vXmod > vYmod) 
+            {
+                if(velX > 0) {
+                    this.sprite.animation = 3;
+                }
+                else if(velX < 0) {
+                    this.sprite.animation = 0;
+                }
             }
-            else if(velY < 0) {
-                this.sprite.animation = 2;
-            }
-        } 
-        else if(vXmod > vYmod) 
-        {
-            if(velX > 0) {
-                this.sprite.animation = 3;
-            }
-            else if(velX < 0) {
-                this.sprite.animation = 0;
-            }
+            this.sprite.playing = true;
         }
         
         this.positionX += velX;
