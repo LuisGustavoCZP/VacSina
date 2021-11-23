@@ -1,0 +1,32 @@
+[
+    {
+        "type":"character",
+        "name":"Player",
+        "sprite": {
+            "src":"sprites/tilemap_packed.png",
+            "index":23
+        },
+        "size":64,
+        "positionX": 0,
+        "positionY": 0,
+        "rotation":0,
+        "speedRotation": 2,
+        "speed": 1,
+        "isTrigger":false
+    },
+    {
+        "type":"character",
+        "name":"Jose",
+        "sprite": {
+            "src":"sprites/tilemap_packed.png",
+            "index":104
+        },
+        "size":64,
+        "positionX": 250,
+        "positionY": 0,
+        "rotation":0,
+        "speedRotation": 2,
+        "speed": 1,
+        "isTrigger":false
+    }
+]

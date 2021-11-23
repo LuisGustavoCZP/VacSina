@@ -1,0 +1,12 @@
+[
+    {
+        "name":"SoftSkills",
+        "icon":"../images/icons/electrical_services_black_24dp.svg",
+        "description":"Habilidade..."
+    },
+    {
+        "name":"HardSkills",
+        "icon":"../images/icons/electrical_services_black_24dp.svg",
+        "description":"Habilidade..."
+    }
+]

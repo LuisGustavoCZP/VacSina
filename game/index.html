@@ -5,6 +5,7 @@
         <style>
             canvas {border:solid black 1px; background-image: url("mapa.png"); background-repeat: no-repeat; background-size: cover;}
         </style>
+        <script src="../scripts/loadobject.js"></script>
         <script src="../scripts/gosprite.js"></script>
         <script src="../scripts/rpgobjetos.js"></script>
         <script src="../scripts/rpgmanager.js"></script>
@@ -14,18 +15,31 @@
         <script>
             var canvas = document.querySelector("canvas");
             var ctx = canvas.getContext("2d");
+            function LoadCharacters () {
+                LoadJSON ("data/personagens.json", data =>
+                {
+                    for(i = 0; i < data.length; i++){
+                        let obj = Character.Load(data[i]);
+                        gameObjetos[i] = obj;
+                        console.log(obj);
+                        //if(obj != undefined) gameObjetos.push(obj);
+                    }
+                });
+            }
+
+            /*new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 23), 0, 0, 64, 0, false, 2, 1),
+            new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 104), 250, 50, 64, 0, false, 2, 3), 
+            new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 185), 50, 250, 64, 0, false, 2, .5),
+            new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 266), 50, 50, 64, 0, false, 3, 1),*/
             
-            let defaultFrame = new SpriteFrame(16,16,1);
-            var gameObjetos = 
-            [
-                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 23), 0, 0, 64, 0, false, 2, 1),
-                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 104), 250, 50, 64, 0, false, 2, 3), 
-                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 185), 50, 250, 64, 0, false, 2, .5),
-                new DynamicObjeto(new AnimatedSprite(defaultFrame, "sprites/tilemap_packed.png", 266), 50, 50, 64, 0, false, 3, 1),
-            ];
+            var gameObjetos = [];
+
+            LoadCharacters ();
+
             tiles = [
                 //new PhysicObjeto(new GOSprite(defaultFrame, "sprites/tilemap_packed.png", 0), 0, 0, 64, 0, true),
             ]
+            
             var rpgmanager = new RPGManager (canvas, ctx, gameObjetos, tiles);
             
             function gameloop ()
@@ -49,7 +63,6 @@
             }
 
             gameloop();
-
             window.addEventListener("click", mouseClick, false);
 
         </script>

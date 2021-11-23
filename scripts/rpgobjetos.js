@@ -16,6 +16,8 @@ class GameObjeto extends Objeto
         this.rotation = rot;
     }
 
+    static defaultFrame = new SpriteFrame(16,16,1);
+
     draw(canvas, context) {
         let hsize = this.size / 2;
         let cx = this.positionX + (canvas.width/2), cy = this.positionY + (canvas.height/2); //hsize
@@ -112,7 +114,16 @@ class DynamicObjeto extends PhysicObjeto
 
 class Character extends DynamicObjeto 
 {
+    constructor (sprite, positionX, positionY, size, rotation, isTrigger, speedRotation, speed)
+    {
+        super(sprite, positionX, positionY, size, rotation, isTrigger, speedRotation, speed);
+    }
 
+    static Load (data)
+    {
+        console.log(data);
+        return new Character(new AnimatedSprite(super.defaultFrame, data.sprite.src, data.sprite.index), data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed);
+    }
 }
 
 class Tile extends PhysicObjeto
@@ -122,5 +133,10 @@ class Tile extends PhysicObjeto
         super(sprite, positionX, positionY, size, rotation, isTrigger);
         this.colliding = false;
         this.collisions = [];
+    }
+
+    static Load (data)
+    {
+        new Tile(data.sprite, data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed);
     }
 }

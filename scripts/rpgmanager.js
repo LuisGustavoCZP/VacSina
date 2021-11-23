@@ -8,7 +8,7 @@ class RPGManager
         this.jogador = 0;
         this.iaTargets = [];
         for(let i = 0; i < gameObjetos.length; i++){
-            this.iaTargets.push(new Objeto(0,0));
+            this.iaTargets[i] = new Objeto(0,0);
         }
     }
 
@@ -21,10 +21,15 @@ class RPGManager
                     this.iaTargets.push(null);
                 }
                 continue;
+            } else if (!this.iaTargets.hasOwnProperty(i)) {
+                this.iaTargets[i] = new Objeto(0,0);
             }
 
             let gameObjeto = this.gameObjetos[i];
             let tgt = this.iaTargets[i];
+            if(tgt == null){
+                continue;
+            }
 
             let dirX = tgt.positionX - gameObjeto.positionX;
             let dirY = tgt.positionY - gameObjeto.positionY;
