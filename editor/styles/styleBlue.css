@@ -10,19 +10,25 @@ main { background-color:darkcyan; }
 .documento__conteudo {background-color:aliceblue;}
 .documento__conteudo__ferramentas {background-color:cadetblue}
 .documento__conteudo__edicao {background-color:gainsboro}
-.menu__modalbox 
-{
+.menu__modalbox {
     background-color:cadetblue;
 }
-.menu__modalbox__ferramenta 
-{
+.menu__modalbox__ferramenta {
     color:midnightblue;
 }
-.menu__modalbox__ferramenta:hover 
-{
+.menu__modalbox__ferramenta:hover {
     background-color:darkblue; 
     color: white; 
 }
+
+.menu__windowbox__child {
+
+}
+
+.menu__windowbox__child button {
+    
+}
+
 td > div {
 
 }
