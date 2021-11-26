@@ -22,40 +22,37 @@ class SpriteSource {
 }
 
 class GOSprite
-{ 
+{
     constructor (spriteFrame, spriteSource){
-        this.spriteFrame = spriteFrame;
-        this.spriteSheet = new Image();
+        this.spriteFrame = spriteFrame;  
         this.readyDraw = false;
-        this.width = 0;
-        this.height = 0;
-        this.spriteSheet.onload = () => 
-        {
-            let maxColum = Math.ceil(this.spriteSheet.width / (this.spriteFrame.width));
-            this.width = this.index % maxColum;
-            this.height = (this.index - this.width) / maxColum;
-            this.readyDraw = true;
-        }
-        this.spriteSheet.onloadstart = () => 
-        {
-            this.readyDraw = false;
-        }
+        this.x = 0;
+        this.y = 0;
         this.index = spriteSource.index;
-        this.spriteSheet.src = spriteSource.src;
+        this.spriteSheet = null;
+        RPGManager.SpriteSheet(spriteSource.src, spriteSheet =>
+        {
+            this.spriteSheet = spriteSheet;
+            this.maxColum = Math.ceil(this.spriteSheet.width / (this.spriteFrame.width));
+            console.log(this.spriteSheet.width + " " + this.maxColum + " " + this.x + " " + this.y);
+            this.x = this.index % this.maxColum;
+            this.y = (this.index - this.x) / this.maxColum;
+            this.readyDraw = true;
+        });
     }
 
     draw(context, posX, posY, size) {
-        let hsize = size / 2;
-        posX = posX - hsize;
-        posY = posY - hsize;
-        let fw = this.spriteFrame.width;
-        let fh = this.spriteFrame.height;
-        let fs = this.spriteFrame.space;
-
         if(this.readyDraw)
         {
-            let fx = (fw * this.width);
-            let fy = (fh * this.height);
+            let hsize = size / 2;
+            posX = posX - hsize;
+            posY = posY - hsize;
+            let fw = this.spriteFrame.width;
+            let fh = this.spriteFrame.height;
+            let fs = this.spriteFrame.space;
+
+            let fx = (fw * this.x);
+            let fy = (fh * this.y);
 
             context.drawImage(
                 this.spriteSheet,
@@ -81,8 +78,7 @@ class AnimatedSprite extends GOSprite
         this.frame = 0;
         this.frameReal = 0;
         this.playing = 0;
-        
-        console.log(spriteSource);
+        //console.log(spriteSource);
     }
 
     draw(context, posX, posY, size) {
@@ -95,7 +91,6 @@ class AnimatedSprite extends GOSprite
             let fw = this.spriteFrame.width;
             let fh = this.spriteFrame.height;
             let fs = this.spriteFrame.space;
-            let maxColum = Math.ceil(this.spriteSheet.width / (fw));
             if(this.playing)
             {
                 this.frameReal++;
@@ -109,8 +104,8 @@ class AnimatedSprite extends GOSprite
                 this.frame = 0;
             }
 
-            let frameIndex = this.index + this.animation + (this.frame*maxColum);
-            let x = frameIndex % maxColum, y = (frameIndex - x) / maxColum;
+            let frameIndex = this.index + this.animation + (this.frame*this.maxColum);
+            let x = frameIndex % this.maxColum, y = (frameIndex - x) / this.maxColum;
             let fx = (fw * x);
             let fy = (fh * y);
 

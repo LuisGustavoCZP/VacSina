@@ -1,37 +1,57 @@
 class RPGManager 
 {
-    constructor (canvas, ctx, gameObjetos, tiles){
-        this.canvas = canvas;
-        this.context2D = ctx;
-        this.tiles = tiles;
-        this.gameObjetos = gameObjetos;
-        this.jogador = 0;
-        this.iaTargets = [];
-        for(let i = 0; i < gameObjetos.length; i++){
-            this.iaTargets[i] = new Objeto(0,0);
+    static spritesSheets = [];
+    static SpriteSheet(path, onload) {
+        
+        if(this.spriteSheets != undefined)
+        {
+            if(this.spriteSheets[path] != undefined)
+            {
+                onload(this.spriteSheets[path]);
+            }
+        } else {
+            this.spriteSheets = [];
         }
+
+        let spriteSheet = new Image();
+        this.spriteSheets[path] = spriteSheet;
+        this.spriteSheets.length++;
+        spriteSheet.onload = x => {
+            onload(x.path[0]);
+        };
+        spriteSheet.src = path;
     }
 
-    
+    constructor (canvas, ctx){
+        this.canvas = canvas;
+        this.context2D = ctx;
+        this.gameObjetos = [];
+        this.maps = [];
+        this.jogador = 0;
+       
+        this.iaTargets = [];
+    }
 
-    LoadCharacters (list, path) {
+    LoadCharacters (path) {
         LoadJSON (path, data =>
         {
             for(let i = 0; i < data.length; i++){
                 let obj = Character.Load(data[i]);
-                list.push(obj);
+                this.gameObjetos.push(obj);
             }
         });
     }
 
-    LoadMap (map, path) {
-        LoadJSON (path, data =>
+    LoadMap (mappath, spritesheetpath) {
+        if(this.maps == undefined) this.maps = [];
+        LoadJSON (mappath, mapdata =>
         {
-            map = {name:data.name, tiles:[]}
-            for(let i = 0; i < data.tiles.length; i++){
-                let obj = Tile.Load(data.tiles[i]);
-                map.tiles.push(obj);
-            }
+            LoadJSON (spritesheetpath, spritesheetdata =>
+            {
+                let m = TileMap.Load(mapdata, spritesheetdata);
+                this.maps.push(m);
+                console.log(m);
+            });
         });
     }
 
@@ -140,20 +160,16 @@ class RPGManager
                     if(i == j) continue;
                     gameObjeto.collision(this.gameObjetos[j]);
                 }
-                for(let j = 0; j < this.tiles.length; j++)
-                {
-                    if(i == j) continue;
-                    gameObjeto.collision(this.tiles[j]);
-                }
             }
         }
     }
 
     gamedraw (){
         this.context2D.clearRect(0,0, this.canvas.width, this.canvas.height);
-        for(let i = 0; i < this.tiles.length; i++){
-            this.tiles[i].draw(this.canvas, this.context2D);
+        for(let i = 0; i < this.maps.length; i++){
+            this.maps[i].draw(this.canvas, this.context2D);
         }
+
         for(let i = 0; i < this.gameObjetos.length; i++){
             this.gameObjetos[i].draw(this.canvas, this.context2D);
         }

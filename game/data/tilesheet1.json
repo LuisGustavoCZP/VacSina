@@ -2,7 +2,7 @@
     {
         "spriteSource": {
             "src":"sprites/tilemap_packed.png",
-            "index":1
+            "id":1
         },
         "size":64,
         "block":false
