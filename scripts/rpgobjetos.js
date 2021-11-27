@@ -126,7 +126,7 @@ class Character extends DynamicObjeto
         let sp = SpriteSource.Load(data.spriteSource);
         let anim = new AnimatedSprite(super.defaultFrame, sp);
         
-        //console.log(anim);
+        console.log(anim);
 
         return new Character(anim, data.positionX, data.positionY, data.size, data.rotation, data.isTrigger, data.speedRotation, data.speed, data.name);
     }
@@ -216,17 +216,18 @@ class TileMap
     }
 
     draw(canvas, context) {
-        
-        //console.log(this.tiles);
         for(let i = 0; i < this.tiles.length; i++) {
             let t = this.tiles[i];
             let tsh = this.tilesheet[t.type];
-            if(tsh == undefined) continue;
-            let hsize = tsh.size / 2;
-
+            if(tsh == undefined) {
+                console.log("Tilesheet nao encontrado!");
+                continue;
+            }
+            let hsize = tsh.size;
+            
             let cx = (t.positionX*hsize) + (canvas.width/2), cy = (t.positionY*hsize) + (canvas.height/2);
-            //console.log("("+ cx + " , " + cy + ")");
-            context.translate(cx, cy);
+            //console.log("Tilesheet nao encontrado!");
+            //context.translate(cx, cy);
             tsh.draw(context, cx, cy);
         }
     }

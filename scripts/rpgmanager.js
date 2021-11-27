@@ -79,8 +79,6 @@ class RPGManager
             let maxDist = Math.sqrt(Math.pow(dirX, 2) + Math.pow(dirY, 2));
             if(maxDist < gameObjeto.speed) {
                 if(i == this.jogador){
-                    //tgt.positionX = gameObjeto.positionX;
-                    //tgt.positionY = gameObjeto.positionY;
                     gameObjeto.directionX = 0;
                     gameObjeto.directionY = 0;
                     continue;
@@ -94,17 +92,8 @@ class RPGManager
 
             dirX = maxDist > 0 ? dirX / maxDist : 0;
             dirY = maxDist > 0 ? dirY / maxDist : 0;
-            //let rad = ((360-gameObjeto.rotation+90)*Math.PI)/180;
-            //let sin = Math.sin(rad), cos = Math.cos(rad);
-
-            //let odirX = (sin != 0? (sin)*dirX : 0) + (cos != 0? (cos)*dirY : 0);
-            //let odirY = (cos != 0? (cos)*dirX : 0) + (sin != 0? (sin)*dirY : 0);
-
-            gameObjeto.directionX = dirX;//odirX;//(1/Math.sin(rad))*dirX + (1/Math.cos(rad))*dirY;
-            gameObjeto.directionY = dirY;//1 - (1/maxDist);
-            //gameObjeto.directionY = Math.sin(rad)*dirX + Math.cos(rad)*dirY;//(1/Math.cos(rad))*dirX + (1/Math.sin(rad))*dirY;
-            //
-            
+            gameObjeto.directionX = dirX;
+            gameObjeto.directionY = dirY;
         }
     }
 

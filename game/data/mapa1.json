@@ -2,15 +2,20 @@
     "name":"Mapa1",
     "width":512,
     "height":512,
-    "tiles": 
+    "tiles":
     [
         {
-            "type":0,
+            "type":1,
             "positionX": 0,
             "positionY": 0
         },
         {
             "type":0,
+            "positionX": 1,
+            "positionY": 0
+        },
+        {
+            "type":2,
             "positionX": 0,
             "positionY": -1
         },
@@ -21,7 +26,7 @@
         },
         {
             "type":0,
-            "positionX": 1,
+            "positionX": 0,
             "positionY": 1
         }
     ]

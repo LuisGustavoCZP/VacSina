@@ -6,5 +6,21 @@
         },
         "size":64,
         "block":false
+    },
+    {
+        "spriteSource": {
+            "src":"sprites/tilemap_packed.png",
+            "id":15
+        },
+        "size":64,
+        "block":false
+    },
+    {
+        "spriteSource": {
+            "src":"sprites/tilemap_packed.png",
+            "id":70
+        },
+        "size":64,
+        "block":false
     }
 ]

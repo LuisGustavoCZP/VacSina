@@ -109,7 +109,7 @@ class AnimatedSprite extends GOSprite
             let fx = (fw * x);
             let fy = (fh * y);
 
-            //console.log(maxColum + " = (" + x + " , " + y + ") = (" + fx + " , " + fy + ")");
+            //console.log(this.maxColum + " = (" + x + " , " + y + ") = (" + fx + " , " + fy + ")");
 
             context.drawImage(
                 this.spriteSheet,

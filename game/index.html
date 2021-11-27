@@ -2,9 +2,14 @@
 <html>
     <head>
         <title>Aprendendo Canvas</title>
-        <!--<style>
-            canvas {border:solid black 1px; background-image: url("mapa.png"); background-repeat: no-repeat; background-size: cover;}
-        </style>-->
+        <style>
+            canvas {
+                border:solid black 1px; 
+                /*background-image: url("mapa.png"); 
+                background-repeat: no-repeat; 
+                background-size: cover;*/
+            }
+        </style>
         
         <script src="../scripts/rpgmanager.js"></script>
         <script src="../scripts/loadobject.js"></script>
@@ -21,7 +26,7 @@
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 104), 250, 50, 64, 0, false, 2, 3), 
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 185), 50, 250, 64, 0, false, 2, .5),
             new DynamicObjeto(new AnimatedSprite(GameObjeto.defaultFrame, "sprites/tilemap_packed.png", 266), 50, 50, 64, 0, false, 3, 1),*/
-            var rpgmanager = new RPGManager (canvas, ctx, []);
+            var rpgmanager = new RPGManager (canvas, ctx);
             
             function gameloop ()
             {
@@ -44,8 +49,8 @@
             }
 
             
-            rpgmanager.LoadMap ("data/mapa1.json", "data/tilesheet1.json");
             rpgmanager.LoadCharacters ("data/personagens.json");
+            rpgmanager.LoadMap ("data/mapa1.json", "data/tilesheet1.json");
             
             gameloop();
             window.addEventListener("click", mouseClick, false);
