@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: block;
+    position: relative;
+    border: 1px; border-style: solid; 
+    border-collapse:collapse;
+    height: 100vh;
+}
+
+header {
+    display: flex; justify-content: stretch; padding: 3px; user-select: none;
+}
+
+main { 
+    padding-top: 3px;
+    height: calc(100% - 24px - 23px);
+}
+
+.arquivo {user-select:text;}
+
+.menu__ferramenta {
+    padding: 5px; padding-bottom: 0; 
+    user-select: none; position: relative;
+}
+
+.menu__modalbox {
+    display: none;
+    position: absolute;
+    flex-direction: row;
+    z-index: 1;
+    left: 0px;
+    width: 200px;
+    height: fit-content;
+    padding: 0px;
+}
+
+.menu__modalbox__ferramenta {
+    display: flex;
+    flex-grow: 1;
+    vertical-align: middle;
+    padding: 5px;
+    
+}
+
+.documento {display: block; flex-grow: 1; flex-direction: column; user-select: none; height: 100%;}
+.documento__ferramentas {border: 0px; border-style: solid; border-bottom: 1px; padding: 5px;}
+.documento__ferramenta {padding: 5px; }
+.documento__aba {display: block; border: 0px; }
+.documento__window {display: block; border: 0px; height: calc(100% - 56px);}
+.documento__conteudo {display: flex; min-height: 100%; flex-direction: row; border-top: 0px;}
+.documento__conteudo__ferramentas {display: block; padding: 10px; min-width: 200px; height:auto;}
+.documento__conteudo__edicao {display: block; flex-grow: 1;}
+
+td > div {
+    display: block;
+    position: relative;
+    
+    /*left: 0px; width: 50px; height: 50px;*/
+    margin: 5px;
+    padding: 5px;
+    justify-content: center;
+    
+    /**/
+}
+
+td > div:hover {
+    background-color: gray;
+}
+
+td > div > img { 
+    display:flex;
+    object-fit: contain;
+    flex-shrink: 1;
+    width: 50px;
+    height: 50px;
+    -webkit-mask-image: url(../images/iconpadrao.svg);
+    mask-image: url(../images/iconpadrao.svg);
+    -webkit-mask-origin: margin-box;
+    mask-origin:margin-box;
+    mask-size: cover;
+    -webkit-mask-size:cover;
+}
+div > span > img {
+    display: flex;
+    padding-right: 5px;
+    vertical-align: text-bottom;
+
+    width: 15px;
+    height: 15px;
+}
+
+.menu__windowbox {
+    background-color: rgb(43, 43, 43, .5);
+    display: block;
+    position: absolute;
+    justify-self: center;
+    align-content: center;
+    flex-direction: row;
+    z-index: 2;
+    left: 0px;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+}
+
+.menu__windowbox__child {
+    
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    flex-grow: 1;
+    
+}
+
+.menu__windowbox__container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    width: 80%;
+    height: 60%;
+    text-align: center;
+    justify-content: stretch;
+    align-content: center;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.menu__windowbox__container button {
+    display: block;
+    align-self: flex-end;
+    padding: 5px;
+}
+
+.menu__windowbox__container > div {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.menu__windowbox__container > div > div {
+    width: 50%;
+    min-height: 50%;
+}
+
+.menu__windowbox__container > span {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}

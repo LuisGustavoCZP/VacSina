@@ -1,26 +1,39 @@
-header {background-color:#1a2d06; color: white;}
-.arquivo {color:#20df50}
-.menu {background-color:#99e54d;}
+:root {
+    --maincolor1: #1a2d06;
+    --maincolor2: #5a8a2b;
+    --maincolor3: #2e613b;
+    --maincolor4: #93b374;
+    --maincolor5: #9dac8e;
+    --maincolor6: #d0d8c7;
+    --maincolor7: aliceblue;
+    --white: white;
+    --black: black;
+}
+
+header {background-color: var(--maincolor1); color: var(--white);}
+.arquivo {color: var(--maincolor3)}
+.menu {background-color: var(--maincolor2);}
 /*.menu__ferramenta {}*/
-.menu__ferramenta:hover {background-color:#20df50; color: black; }
-main { background-color:#b3ec79; }
-.documento__aba {background-color:#d0d8c7; border-style: solid;}
-.documento__ferramenta {color:black;}
-.documento__ferramenta:hover {background-color:#20df50; color: black; user-select: none;}
-.documento__conteudo {background-color:aliceblue;}
-.documento__conteudo__ferramentas {background-color:#99e54d}
-.documento__conteudo__edicao {background-color:#ccf2a6}
+.menu__ferramenta:hover {background-color: var(--maincolor3); color: var(--black); }
+main { background-color: var(--maincolor4);}
+.documento__aba {background-color: var(--maincolor6); border-style: solid;}
+.documento__window {background-color: var(--maincolor6); border-style: solid;}
+.documento__ferramenta {color:var(--black);}
+.documento__ferramenta:hover {background-color:var(--maincolor3); color: var(--black); user-select: none;}
+.documento__conteudo {background-color: var(--maincolor7);}
+.documento__conteudo__ferramentas {background-color:var(--maincolor2)}
+.documento__conteudo__edicao {background-color: var(--maincolor5)}
 .menu__modalbox {
-    background-color:#99e54d;
+    background-color: var(--maincolor2);
 }
 .menu__modalbox__ferramenta 
 {
-    color:white;
+    color:var(--white);
 }
 .menu__modalbox__ferramenta:hover 
 {
-    background-color:#20df50; 
-    color: white; 
+    background-color: var(--maincolor3); 
+    color:var(--white);
 }
 td > div {
 
@@ -31,5 +44,9 @@ td > div > img {
 
 .menu__windowbox__container
 {
-    background-color: #99e54d;
+    background-color: var(--white);
+}
+
+.menu__windowbox__container > div > div {
+    background-color: var(--maincolor4);
 }

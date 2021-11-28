@@ -5,6 +5,7 @@ header {background-color:aquamarine; color: black;}
 .menu__ferramenta:hover {background-color:darkblue; color: white; }
 main { background-color:darkcyan; }
 .documento__aba {background-color:cadetblue; border-style: solid; }
+.documento__window {background-color:cadetblue; border-style: solid; }
 .documento__ferramenta {color:midnightblue;}
 .documento__ferramenta:hover {background-color:darkblue; color: white; user-select: none;}
 .documento__conteudo {background-color:aliceblue;}

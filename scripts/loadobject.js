@@ -26,9 +26,9 @@ function LoadHTML (path, act)
     LoadHTMLText(path, x => 
     {
         let doc = TextParser(x, "text/html");
-        let element = doc.body.firstChild;
+        let element = doc.body.children[0];
         
-        //console.log(element);
+        console.log(element);
 
         act(element);
     });
