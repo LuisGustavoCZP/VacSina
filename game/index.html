@@ -4,10 +4,7 @@
         <title>Aprendendo Canvas</title>
         <style>
             canvas {
-                border:solid black 1px; 
-                /*background-image: url("mapa.png"); 
-                background-repeat: no-repeat; 
-                background-size: cover;*/
+                border:solid black 1px;
             }
         </style>
         
@@ -35,11 +32,8 @@
             }
 
             function mouseClick (e){
-                //let gameObjeto = gameObjetos[jogador];
                 let iat = rpgmanager.iaTargets;
-                //console.log(iat + "," + rpgmanager.jogador);
                 let tgt = iat[rpgmanager.jogador];
-                //console.log(tgt);
                 let pos = rpgmanager.canvas.getBoundingClientRect();
                 let offsetX = - pos.left;
                 let offsetY = - pos.top;
