@@ -33,7 +33,9 @@ class GOSprite
         RPGManager.SpriteSheet(spriteSource.src, spriteSheet =>
         {
             this.spriteSheet = spriteSheet;
-            this.maxColum = Math.ceil(this.spriteSheet.width / (this.spriteFrame.width));
+            const fs = this.spriteFrame.space;
+            const nw = this.spriteFrame.width + fs;
+            this.maxColum = Math.ceil((this.spriteSheet.width + fs) / (nw));
             console.log(this.spriteSheet.width + " " + this.maxColum + " " + this.x + " " + this.y);
             this.x = this.index % this.maxColum;
             this.y = (this.index - this.x) / this.maxColum;
@@ -44,15 +46,15 @@ class GOSprite
     draw(context, posX, posY, size) {
         if(this.readyDraw)
         {
-            let hsize = size / 2;
+            const hsize = size / 2;
             posX = posX - hsize;
             posY = posY - hsize;
-            let fw = this.spriteFrame.width;
-            let fh = this.spriteFrame.height;
-            let fs = this.spriteFrame.space;
+            const fw = this.spriteFrame.width;
+            const fh = this.spriteFrame.height;
+            const fs = this.spriteFrame.space;
 
-            let fx = (fw * this.x);
-            let fy = (fh * this.y);
+            const fx = ((fw + fs) * this.x);
+            const fy = ((fh + fs) * this.y);
 
             context.drawImage(
                 this.spriteSheet,
@@ -82,15 +84,16 @@ class AnimatedSprite extends GOSprite
     }
 
     draw(context, posX, posY, size) {
-        let hsize = size / 2;
+        const hsize = size / 2;
         posX = posX - hsize;
         posY = posY - size;
 
         if(this.readyDraw)
         {
-            let fw = this.spriteFrame.width;
-            let fh = this.spriteFrame.height;
-            let fs = this.spriteFrame.space;
+            const fs = this.spriteFrame.space;
+            const fw = this.spriteFrame.width + fs;
+            const fh = this.spriteFrame.height + fs;
+            
             if(this.playing)
             {
                 this.frameReal++;
@@ -104,10 +107,10 @@ class AnimatedSprite extends GOSprite
                 this.frame = 0;
             }
 
-            let frameIndex = this.index + this.animation + (this.frame*this.maxColum);
-            let x = frameIndex % this.maxColum, y = (frameIndex - x) / this.maxColum;
-            let fx = (fw * x);
-            let fy = (fh * y);
+            const frameIndex = this.index + this.animation + (this.frame*this.maxColum);
+            const x = frameIndex % this.maxColum, y = (frameIndex - x) / this.maxColum;
+            const fx = (fw * x);
+            const fy = (fh * y);
 
             //console.log(this.maxColum + " = (" + x + " , " + y + ") = (" + fx + " , " + fy + ")");
 

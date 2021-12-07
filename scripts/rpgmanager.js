@@ -13,7 +13,7 @@ class RPGManager
             this.spriteSheets = [];
         }
 
-        let spriteSheet = new Image();
+        const spriteSheet = new Image();
         this.spriteSheets[path] = spriteSheet;
         this.spriteSheets.length++;
         spriteSheet.onload = x => {
@@ -36,7 +36,7 @@ class RPGManager
         LoadJSON (path, data =>
         {
             for(let i = 0; i < data.length; i++){
-                let obj = Character.Load(data[i]);
+                const obj = Character.Load(data[i]);
                 this.gameObjetos.push(obj);
             }
         });
@@ -48,7 +48,7 @@ class RPGManager
         {
             LoadJSON (spritesheetpath, spritesheetdata =>
             {
-                let m = TileMap.Load(mapdata, spritesheetdata);
+                const m = TileMap.Load(mapdata, spritesheetdata);
                 this.maps.push(m);
                 console.log(m);
             });
@@ -68,15 +68,15 @@ class RPGManager
                 this.iaTargets[i] = new Objeto(0,0);
             }
 
-            let gameObjeto = this.gameObjetos[i];
-            let tgt = this.iaTargets[i];
+            const gameObjeto = this.gameObjetos[i];
+            const tgt = this.iaTargets[i];
             if(tgt == null){
                 continue;
             }
 
             let dirX = tgt.positionX - gameObjeto.positionX;
             let dirY = tgt.positionY - gameObjeto.positionY;
-            let maxDist = Math.sqrt(Math.pow(dirX, 2) + Math.pow(dirY, 2));
+            const maxDist = Math.sqrt(Math.pow(dirX, 2) + Math.pow(dirY, 2));
             if(maxDist < gameObjeto.speed) {
                 if(i == this.jogador){
                     gameObjeto.directionX = 0;
@@ -98,7 +98,7 @@ class RPGManager
     }
 
     updatePlayerControls(){
-        let gameObjeto = this.gameObjetos[this.jogador];
+        const gameObjeto = this.gameObjetos[this.jogador];
         if(this.mvLeft){
             gameObjeto.directionX = -1;
         } else
@@ -118,7 +118,7 @@ class RPGManager
     }
 
     keyUpHandler (e){
-        let key = e.keyCode;
+        const key = e.keyCode;
         if(key == this.LEFT) this.mvLeft = false;
         if(key == this.RIGHT) this.mvRight = false;
         if(key == this.UP) this.mvUp = false;
@@ -127,7 +127,7 @@ class RPGManager
     }
 
     keyDownHandler (e){
-        let key = e.keyCode;
+        const key = e.keyCode;
         if(key == this.LEFT) this.mvLeft = true;
         if(key == this.RIGHT) this.mvRight = true;
         if(key == this.UP) this.mvUp = true;
@@ -137,7 +137,7 @@ class RPGManager
 
     gameupdate (){
         for(let i = 0; i < this.gameObjetos.length; i++){
-            let gameObjeto = this.gameObjetos[i];
+            const gameObjeto = this.gameObjetos[i];
             
             if(gameObjeto instanceof DynamicObjeto){
                 gameObjeto.update();

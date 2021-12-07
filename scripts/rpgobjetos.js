@@ -19,8 +19,8 @@ class GameObjeto extends Objeto
     static defaultFrame = new SpriteFrame(16,16,1);
 
     draw(canvas, context) {
-        let hsize = this.size / 2;
-        let cx = this.positionX + (canvas.width/2), cy = this.positionY + (canvas.height/2); //hsize
+        const hsize = this.size / 2;
+        const cx = this.positionX + (canvas.width/2), cy = this.positionY + (canvas.height/2); //hsize
         //console.log("Drawing GO");
         context.translate(cx, cy);
         context.rotate((Math.PI / 180) * this.rotation);     
@@ -73,15 +73,15 @@ class DynamicObjeto extends PhysicObjeto
 
     update()
     {
-        let velX = this.directionX*this.speed, velY = this.directionY*this.speed;
+        const velX = this.directionX*this.speed, velY = this.directionY*this.speed;
         if(this.colliding)
         {
             velX = -velX;
             velY = -velY;
         }
 
-        let vXmod = Math.abs(velX);
-        let vYmod = Math.abs(velY);
+        const vXmod = Math.abs(velX);
+        const vYmod = Math.abs(velY);
 
         if(vXmod + vYmod == 0){
             this.sprite.playing = false;
@@ -123,8 +123,8 @@ class Character extends DynamicObjeto
     static Load (data)
     {
         console.log("Lendo sprite " + data.name);
-        let sp = SpriteSource.Load(data.spriteSource);
-        let anim = new AnimatedSprite(super.defaultFrame, sp);
+        const sp = SpriteSource.Load(data.spriteSource);
+        const anim = new AnimatedSprite(super.defaultFrame, sp);
         
         console.log(anim);
 
@@ -186,11 +186,11 @@ class TileMap
     
     static Create (name, width, height, tilesheet)
     {
-        let tiles = [];
+        const tiles = [];
         
         for (let j = 0; j < height; j++) 
         {
-            let c = (height*j);
+            const c = (height*j);
             for (let i = 0; i < width; i++) {
                 tiles.push(new Tile(i, j, tilesheet[0]));
             }

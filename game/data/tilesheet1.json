@@ -1,7 +1,7 @@
 [
     {
         "spriteSource": {
-            "src":"sprites/tilemap_packed.png",
+            "src":"sprites/tilemap.png",
             "id":1
         },
         "size":64,
@@ -9,7 +9,7 @@
     },
     {
         "spriteSource": {
-            "src":"sprites/tilemap_packed.png",
+            "src":"sprites/tilemap.png",
             "id":15
         },
         "size":64,
@@ -17,7 +17,7 @@
     },
     {
         "spriteSource": {
-            "src":"sprites/tilemap_packed.png",
+            "src":"sprites/tilemap.png",
             "id":70
         },
         "size":64,
