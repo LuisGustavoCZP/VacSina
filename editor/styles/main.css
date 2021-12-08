@@ -153,6 +153,15 @@ div > span > img {
 .menu__windowbox__container > div > div {
     width: 50%;
     min-height: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.menu__windowbox__container > div > div > * {
+    display: flex;
+    height: fit-content;
+    padding: 5px;
 }
 
 .menu__windowbox__container > span {

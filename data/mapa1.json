@@ -2,6 +2,7 @@
     "name":"Mapa1",
     "width":512,
     "height":512,
+    "tilesheet":"tilesheet1.json",
     "tiles":
     [
         {
@@ -29,6 +30,5 @@
             "positionX": 0,
             "positionY": 1
         }
-    ]
-    
+    ] 
 }

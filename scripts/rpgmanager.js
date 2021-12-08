@@ -33,9 +33,10 @@ class RPGManager
     }
 
     LoadCharacters (path) {
-        LoadJSON (path, data =>
+        LoadJSON (dataPath+path, data =>
         {
-            for(let i = 0; i < data.length; i++){
+            for(let i = 0; i < data.length; i++)
+            {
                 const obj = Character.Load(data[i]);
                 this.gameObjetos.push(obj);
             }
@@ -44,9 +45,9 @@ class RPGManager
 
     LoadMap (mappath, spritesheetpath) {
         if(this.maps == undefined) this.maps = [];
-        LoadJSON (mappath, mapdata =>
+        LoadJSON (dataPath+mappath, mapdata =>
         {
-            LoadJSON (spritesheetpath, spritesheetdata =>
+            LoadJSON (dataPath+spritesheetpath, spritesheetdata =>
             {
                 const m = TileMap.Load(mapdata, spritesheetdata);
                 this.maps.push(m);

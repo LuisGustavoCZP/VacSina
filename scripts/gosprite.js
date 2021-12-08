@@ -7,7 +7,8 @@ class SpriteFrame
     }
 }
 
-class SpriteSource {
+class SpriteSource 
+{
     constructor (src, index){
         
         //console.log(src + " : " + index);
