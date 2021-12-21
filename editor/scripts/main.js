@@ -60,7 +60,7 @@ function WindowCreateMapa (evt)
     LoadHTML("mapcreation.html", x => 
     {
         x.querySelector("#cancelbutton").onclick = x => {CancelCreateMapa(popupWindow);};
-        x.querySelector("#createbutton").onclick = x => {FinishCreateMapa(popupWindow);};
+        //x.querySelector("#createbutton").onclick = x => {FinishCreateMapa(popupWindow);};
         popupWindow.append(x);
     });
     body.insertBefore(popupWindow, body.firstChild);

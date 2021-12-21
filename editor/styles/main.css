@@ -164,7 +164,7 @@ div > span > img {
     padding: 5px;
 }
 
-.menu__windowbox__container > span {
+.menu__windowbox__container > div > form > span {
     padding: 15px;
     display: flex;
     justify-content: space-between;
