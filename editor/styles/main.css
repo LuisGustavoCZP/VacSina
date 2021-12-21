@@ -150,7 +150,7 @@ div > span > img {
     height: 100%;
 }
 
-.menu__windowbox__container > div > div {
+.menu__windowbox__container > div > form {
     width: 50%;
     min-height: 50%;
     display: flex;
@@ -158,7 +158,7 @@ div > span > img {
     padding: 10px;
 }
 
-.menu__windowbox__container > div > div > * {
+.menu__windowbox__container > div > form > * {
     display: flex;
     height: fit-content;
     padding: 5px;
