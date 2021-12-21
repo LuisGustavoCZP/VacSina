@@ -134,15 +134,45 @@ class Character extends DynamicObjeto
 
 class Tile extends Objeto
 {
-    constructor (posX, posY, type)
+    constructor (posX, posY, size)
     {
         super(posX, posY);
+        this.size = size;
+    }
+
+    static Load (data)
+    {
+        if(data.hasOwnProperty("subtiles")) return TileNode.Load(data);
+        else return TileLeaf.Load(data);
+        return new Tile(data.positionX, data.positionY, data.size);
+    }
+}
+
+class TileNode extends Tile
+{
+    constructor (posX, posY, size, subtiles)
+    {
+        super(posX, posY, size);
+        this.subtiles = subtiles;
+    }
+
+    static Load (data)
+    {
+        return new TileNode(data.positionX, data.positionY, data.size, data.subtiles);
+    }
+}
+
+class TileLeaf extends Tile
+{
+    constructor (posX, posY, size, type)
+    {
+        super(posX, posY, size);
         this.type = type;
     }
 
     static Load (data)
     {
-        return new Tile(data.positionX, data.positionY, data.type);
+        return new TileLeaf(data.positionX, data.positionY, data.size, data.type);
     }
 }
 

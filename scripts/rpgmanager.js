@@ -45,9 +45,9 @@ class RPGManager
 
     LoadMap (mappath, spritesheetpath) {
         if(this.maps == undefined) this.maps = [];
-        LoadJSON (dataPath+mappath, mapdata =>
+        LoadJSON (dataPath + mappath, mapdata =>
         {
-            LoadJSON (dataPath+spritesheetpath, spritesheetdata =>
+            LoadJSON (dataPath + spritesheetpath, spritesheetdata =>
             {
                 const m = TileMap.Load(mapdata, spritesheetdata);
                 this.maps.push(m);
