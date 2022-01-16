@@ -18,26 +18,48 @@
                 </polygon>
             </svg>
             <span style="padding-left: 5px; padding-right: 5px;">Editor de Tiles - </span>
-            <span class="arquivo">exemplo.xml</span>
+            <span id="arquivo-title" class="arquivo">empty</span>
         </header>
         <nav class="menu" style="display:flex; flex-direction: row;">
             <span class="menu__ferramenta" onpointerdown="OnEnterMenu(0)" onpointerleave="OnExitMenu(0)">
                 <span style="text-decoration: underline;">F</span>icheiro
-                <div id="menu-ficheiro" class="menu__modalbox" onclick="menuSelect(0, 0)">
-                    <span class="menu__modalbox__ferramenta">
-                        <img src="images/aula14ex2screenshot.png" />
-                        <span>Novo</span>
-                    </span>
-                </div>
+                <ul id="menu-ficheiro" class="menu__modalbox hidden">
+                    <li onclick="menuSelect(0, 0)">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot.png" />
+                            <span>Novo Mapa</span>
+                        </span>
+                    </li>
+                    <li onclick="menuSelect(0, 1)">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot.png" />
+                            <span>Abrir Mapa</span>
+                        </span>
+                    </li>
+                    <li onclick="menuSelect(0, 2)">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot.png" />
+                            <span>Novo Tilesheet</span>
+                        </span>
+                    </li>
+                    <li onclick="menuSelect(0, 3)">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot.png" />
+                            <span>Abrir Tilesheet</span>
+                        </span>
+                    </li>
+                </ul>
             </span>
             <span class="menu__ferramenta" onpointerdown="OnEnterMenu(1)" onpointerleave="OnExitMenu(1)">
                 <span style="text-decoration: underline;">E</span>ditar
-                <div id="menu-editar" class="menu__modalbox">
-                    <span class="menu__modalbox__ferramenta">
-                        <img src="images/aula14ex2screenshot2.png" />
-                        <span>Desfazer</span>
-                    </span>
-                </div>
+                <ul id="menu-editar" class="menu__modalbox hidden">
+                    <li onclick="menuSelect(1, 0)">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot2.png" />
+                            <span>Desfazer</span>
+                        </span>
+                    </li>
+                </ul>
             </span>
             <!--<span class="menu__ferramenta" ><span style="text-decoration: underline;">V</span>er</span>
             <span class="menu__ferramenta" ><span style="text-decoration: underline;">M</span>undo</span>
@@ -47,11 +69,11 @@
             <span class="menu__ferramenta" ><span style="text-decoration: underline;">A</span>juda</span>-->
         </nav>
         <main>
-            <section class="documento">
-                <span class="documento__aba" style="width: fit-content; padding: 5px; margin-left: 3px; border-top-left-radius: 5px; border-top-right-radius: 5px;">exemplo.xml</span>
+            <section id="map-file" class="documento hidden">
+                <span class="documento__aba"><span>exemplo.xml</span><button>x</button></button></span>
                 <article class="documento__window">
                     <nav class="documento__ferramentas">
-                        <span onclick="menuSelect(0, 0)" class="documento__ferramenta">Novo</span>
+                        <span class="documento__ferramenta">Novo</span>
                         <span class="documento__ferramenta">Abrir</span>
                         <span class="documento__ferramenta">Salvar</span> 
                         |
@@ -62,30 +84,12 @@
                         <span class="documento__ferramenta">Mover</span>
                     </nav>
                     <div class="documento__conteudo">
-                        <div class="documento__conteudo__edicao">
-                            <canvas width="100">
-                                
-                            </canvas>
-                        </div>
+                        <canvas class="documento__conteudo__edicao"></canvas>
                         <div class="documento__conteudo__ferramentas">
-                            <span>Escolha um dos Styles:</span>
-                            <a href="styles/styleGreen.css" target="estilo">Verde</a>
-                            <table>
-                                <th>
-                                    <td>
-                                        <div onclick="OnClickEstilo(0)">
-                                            <img src="images/aula14ex2screenshot.png" />
-       
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div onclick="OnClickEstilo(1)">
-                                            <img src="images/aula14ex2screenshot2.png" />
-                                   
-                                        </div>
-                                    </td>
-                                </th>
-                            </table>
+                            <span>
+                                Spritesheet:<select id="tilesheets_name" name="tilesheets_name"></select>
+                            </span>
+                            <ul id="tilesheets_box"></ul>
                         </div>
                     </div>
                 </article>

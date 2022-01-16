@@ -29,14 +29,16 @@ main {
 }
 
 .menu__modalbox {
-    display: none;
+    display: flex;
     position: absolute;
-    flex-direction: row;
+    flex-direction: column;
     z-index: 1;
     left: 0px;
     width: 200px;
     height: fit-content;
     padding: 0px;
+    
+    list-style: none;
 }
 
 .menu__modalbox__ferramenta {
@@ -50,11 +52,33 @@ main {
 .documento {display: block; flex-grow: 1; flex-direction: column; user-select: none; height: 100%;}
 .documento__ferramentas {border: 0px; border-style: solid; border-bottom: 1px; padding: 5px;}
 .documento__ferramenta {padding: 5px; }
-.documento__aba {display: block; border: 0px; }
+.documento__aba {
+    display: block; border: 0px; padding: 5px 5px 5px 15px; 
+    width: fit-content; margin-left: 3px; border-top-left-radius: 5px; border-top-right-radius: 5px;
+}
+.documento__aba > button { width: 20px; height: 20px; margin: 0px 5px; background-color: unset; border: none; font-size: large; }
+.documento__aba > button:hover { color:crimson; }
+
 .documento__window {display: block; border: 0px; height: calc(100% - 56px);}
 .documento__conteudo {display: flex; min-height: 100%; flex-direction: row; border-top: 0px;}
-.documento__conteudo__ferramentas {display: block; padding: 10px; min-width: 200px; height:auto;}
-.documento__conteudo__edicao {display: block; flex-grow: 1;}
+.documento__conteudo__ferramentas {
+    display: block; padding: 10px; min-width: 200px; height:auto;
+}
+
+.documento__conteudo__ferramentas > span {
+    display: flex;
+    flex-grow: 1; 
+}
+
+.documento__conteudo__ferramentas > span > select {
+    display: flex;
+    flex-grow: 1; 
+}
+
+.documento__conteudo__edicao {
+    display: flex; 
+    flex-grow: 1;
+}
 
 td > div {
     display: block;
@@ -85,13 +109,21 @@ td > div > img {
     mask-size: cover;
     -webkit-mask-size:cover;
 }
-div > span > img {
+
+li > span > img {
     display: flex;
     padding-right: 5px;
     vertical-align: text-bottom;
 
     width: 15px;
     height: 15px;
+}
+
+#tilesheets_box {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .menu__windowbox {
@@ -128,8 +160,8 @@ div > span > img {
     display: flex;
     flex-direction: column;
     flex-grow: 0;
-    width: 80%;
-    height: 60%;
+    width: 40%;
+    height: fit-content;
     text-align: center;
     justify-content: stretch;
     align-content: center;
@@ -151,7 +183,7 @@ div > span > img {
 }
 
 .menu__windowbox__container > div > form {
-    width: 50%;
+    width: 100%;
     min-height: 50%;
     display: flex;
     flex-direction: column;
@@ -169,4 +201,8 @@ div > span > img {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+}
+
+.hidden {
+    display: none;
 }

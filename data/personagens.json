@@ -3,7 +3,7 @@
         "type":"character",
         "name":"Player",
         "spriteSource": {
-            "src":"sprites/tilemap.png",
+            "src":"/sprites/tilemap.png",
             "id":23
         },
         "size":64,
@@ -18,7 +18,7 @@
         "type":"character",
         "name":"Jose",
         "spriteSource": {
-            "src":"sprites/tilemap.png",
+            "src":"/sprites/tilemap.png",
             "id":104
         },
         "size":64,

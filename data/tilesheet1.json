@@ -1,26 +1,20 @@
-[
-    {
-        "spriteSource": {
-            "src":"sprites/tilemap.png",
-            "id":1
+{
+    "name":"tilesheet1",
+    "src":"sprites/tilemap.png",
+    "size":64,
+    "tiles":
+    [
+        {
+            "id":1,
+            "block":false
         },
-        "size":64,
-        "block":false
-    },
-    {
-        "spriteSource": {
-            "src":"sprites/tilemap.png",
-            "id":15
+        {
+            "id":15,
+            "block":false
         },
-        "size":64,
-        "block":false
-    },
-    {
-        "spriteSource": {
-            "src":"sprites/tilemap.png",
-            "id":70
-        },
-        "size":64,
-        "block":false
-    }
-]
+        {
+            "id":70,
+            "block":false
+        }
+    ]
+}
