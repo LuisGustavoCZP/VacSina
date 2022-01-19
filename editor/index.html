@@ -3,9 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>Editor de Tiles</title>
-        
-        <script src="../scripts/loadobject.js"></script>
-
         <link rel="stylesheet" href="styles/main.css">
         <link name="estilo" id="estilo" rel="stylesheet" href="styles/styleGreen.css">
     </head>
@@ -84,7 +81,9 @@
                         <span class="documento__ferramenta">Mover</span>
                     </nav>
                     <div class="documento__conteudo">
-                        <canvas class="documento__conteudo__edicao"></canvas>
+                        <div class="documento__conteudo__edicao">
+                            <canvas></canvas>
+                        </div>
                         <div class="documento__conteudo__ferramentas">
                             <span>
                                 Spritesheet:<select id="tilesheets_name" name="tilesheets_name"></select>
@@ -99,5 +98,6 @@
            
         </aside>
     </body>
+    <script src="../scripts/loadobject.js"></script>
     <script src="scripts/main.js"></script>
 </html>

@@ -1,4 +1,6 @@
-class RPGManager 
+import { Objeto, GameObjeto, PhysicObjeto, DynamicObjeto, Character, Tile, TilePrefab, TileMap } from "./rpgobjetos.js";
+
+export class RPGManager 
 {
     static spritesSheets = [];
     static SpriteSheet(path, onload) {
@@ -22,18 +24,18 @@ class RPGManager
         spriteSheet.src = path;
     }
 
-    constructor (canvas, ctx){
+    constructor (canvas){
         this.canvas = canvas;
-        this.context2D = ctx;
+        this.context2D = canvas.getContext("2d");
         this.gameObjetos = [];
         this.maps = [];
         this.jogador = 0;
        
         this.iaTargets = [];
     }
-
+    dataPath = "../data/";
     LoadCharacters (path) {
-        LoadJSON (dataPath+path, data =>
+        LoadJSON (this.dataPath+path, data =>
         {
             for(let i = 0; i < data.length; i++)
             {
@@ -45,9 +47,9 @@ class RPGManager
 
     LoadMap (mappath, spritesheetpath) {
         if(this.maps == undefined) this.maps = [];
-        LoadJSON (dataPath + mappath, mapdata =>
+        LoadJSON (this.dataPath + mappath, mapdata =>
         {
-            LoadJSON (dataPath + spritesheetpath, spritesheetdata =>
+            LoadJSON (this.dataPath + spritesheetpath, spritesheetdata =>
             {
                 const m = TileMap.Load(mapdata, spritesheetdata);
                 this.maps.push(m);

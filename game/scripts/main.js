@@ -1,8 +1,8 @@
-const dataPath = "../data/";
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
+import { RPGManager } from "../../scripts/rpgmanager.js";
 
-const rpgmanager = new RPGManager (canvas, ctx);
+const canvas = document.querySelector("canvas");
+
+const rpgmanager = new RPGManager (canvas);
 
 function gameloop ()
 {

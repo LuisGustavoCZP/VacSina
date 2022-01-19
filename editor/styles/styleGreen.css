@@ -22,7 +22,7 @@ main { background-color: var(--maincolor4);}
 .documento__ferramenta:hover {background-color:var(--maincolor3); color: var(--black); user-select: none;}
 .documento__conteudo {background-color: var(--maincolor7);}
 .documento__conteudo__ferramentas {background-color:var(--maincolor2)}
-.documento__conteudo__edicao {background-color: var(--maincolor5)}
+.documento__conteudo__edicao {background-color: var(--maincolor5); overflow: scroll;}
 .menu__modalbox {
     background-color: var(--maincolor2);
 }

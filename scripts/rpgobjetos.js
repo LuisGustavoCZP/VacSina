@@ -1,4 +1,6 @@
-class Objeto 
+import { SpriteFrame, SpriteSource, GOSprite, AnimatedSprite } from "./gosprite.js";
+
+export class Objeto 
 {
     constructor (posX, posY){
         this.positionX = posX;
@@ -6,7 +8,7 @@ class Objeto
     }
 }
 
-class GameObjeto extends Objeto
+export class GameObjeto extends Objeto
 {
     constructor (sprite, posX, posY, size, rot)
     {
@@ -32,7 +34,7 @@ class GameObjeto extends Objeto
     }
 }
 
-class PhysicObjeto extends GameObjeto 
+export class PhysicObjeto extends GameObjeto 
 {
     constructor (sprite, positionX, positionY, size, rotation, isTrigger)
     {
@@ -59,7 +61,7 @@ class PhysicObjeto extends GameObjeto
     }
 }
 
-class DynamicObjeto extends PhysicObjeto 
+export class DynamicObjeto extends PhysicObjeto 
 {
     constructor (sprite, positionX, positionY, size, rotation, isTrigger, speedRotation, speed)
     {
@@ -112,7 +114,7 @@ class DynamicObjeto extends PhysicObjeto
     }
 }
 
-class Character extends DynamicObjeto 
+export class Character extends DynamicObjeto 
 {
     constructor (sprite, positionX, positionY, size, rotation, isTrigger, speedRotation, speed, name)
     {
@@ -132,23 +134,23 @@ class Character extends DynamicObjeto
     }
 }
 
-class Tile extends Objeto
+export class Tile extends Objeto
 {
-    constructor (posX, posY, size)
+    constructor (posX, posY, type)
     {
         super(posX, posY);
-        this.size = size;
+        this.type = type;
     }
 
     static Load (data)
     {
-        if(data.hasOwnProperty("subtiles")) return TileNode.Load(data);
-        else return TileLeaf.Load(data);
-        return new Tile(data.positionX, data.positionY, data.size);
+        //if(data.hasOwnProperty("subtiles")) return TileNode.Load(data);
+        //else return TileLeaf.Load(data);
+        return new Tile(data.positionX, data.positionY, data.type);
     }
 }
 
-class TileNode extends Tile
+/*class TileNode extends Tile
 {
     constructor (posX, posY, size, subtiles)
     {
@@ -174,9 +176,9 @@ class TileLeaf extends Tile
     {
         return new TileLeaf(data.positionX, data.positionY, data.size, data.type);
     }
-}
+}*/
 
-class TilePrefab
+export class TilePrefab
 {
     static defaultFrame;
     static GetDFrame () {
@@ -203,7 +205,7 @@ class TilePrefab
     }
 }
 
-class TileMap 
+export class TileMap 
 {
     constructor (name, width, height, tiles, tilesheet)
     {

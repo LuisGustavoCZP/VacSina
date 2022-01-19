@@ -1,4 +1,6 @@
-class SpriteFrame 
+import { RPGManager } from "../../scripts/rpgmanager.js";
+
+export class SpriteFrame 
 {
     constructor (width, height, space){
         this.width = width;
@@ -7,7 +9,7 @@ class SpriteFrame
     }
 }
 
-class SpriteSource 
+export class SpriteSource 
 {
     constructor (src, index){
         
@@ -22,7 +24,7 @@ class SpriteSource
     }
 }
 
-class GOSprite
+export class GOSprite
 {
     constructor (spriteFrame, spriteSource){
         this.spriteFrame = spriteFrame;  
@@ -73,7 +75,7 @@ class GOSprite
     
 }
 
-class AnimatedSprite extends GOSprite
+export class AnimatedSprite extends GOSprite
 { 
     constructor (spriteFrame, spriteSource){
         super(spriteFrame, spriteSource);
