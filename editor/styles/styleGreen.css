@@ -19,14 +19,25 @@ main { background-color: var(--maincolor4);}
 .documento__aba {background-color: var(--maincolor6); border-style: solid;}
 .documento__window {background-color: var(--maincolor6); border-style: solid;}
 .documento__ferramenta {color:var(--black);}
-.documento__ferramenta:hover {background-color:var(--maincolor3); color: var(--black); user-select: none;}
+
+.documento__ferramenta:hover {
+    background-color:var(--maincolor5); 
+    color: var(--white); 
+    user-select: none;
+}
+.documento__ferramenta:active {
+    background-color:var(--maincolor4); 
+    color: var(--maincolor3); 
+    user-select: none;
+}
+
 .documento__conteudo {background-color: var(--maincolor7);}
 .documento__conteudo__ferramentas {background-color:var(--maincolor2)}
 .documento__conteudo__edicao {background-color: var(--maincolor5); overflow: scroll;}
 .menu__modalbox {
     background-color: var(--maincolor2);
 }
-.menu__modalbox__ferramenta 
+.menu__modalbox__ferramenta
 {
     color:var(--white);
 }
@@ -35,6 +46,13 @@ main { background-color: var(--maincolor4);}
     background-color: var(--maincolor3); 
     color:var(--white);
 }
+
+.menu__modalbox__ferramenta:left 
+{
+    background-color: var(--maincolor3); 
+    color:var(--white);
+}
+
 td > div {
 
 }
@@ -49,4 +67,25 @@ td > div > img {
 
 .menu__windowbox__container > div > form {
     background-color: var(--maincolor4);
+}
+
+#tilesheets_box > li {
+    background-color: var(--maincolor6);
+    
+    margin: 2px;
+}
+
+#tilesheets_box > li:hover {
+    border: 2px solid;
+    border-color: var(--maincolor5);
+}
+
+#tilesheets_box > li:active {
+    border: 5px solid;
+    border-color: var(--maincolor4);
+}
+
+.selected {
+    border: 3px solid;
+    border-color: var(--maincolor3);
 }

@@ -66,12 +66,14 @@
             <span class="menu__ferramenta" ><span style="text-decoration: underline;">A</span>juda</span>-->
         </nav>
         <main>
-            <section id="map-file" class="documento hidden">
-                <span class="documento__aba"><span>exemplo.xml</span><button>x</button></button></span>
+            <section id="data-file" class="documento hidden">
+                <ul id="abas" class="documento__abas">
+                    <!-- <li class="documento__aba"><span>exemplo.xml</span><button>x</button></li> -->
+                </ul>
                 <article class="documento__window">
-                    <nav class="documento__ferramentas">
-                        <span class="documento__ferramenta">Novo</span>
-                        <span class="documento__ferramenta">Abrir</span>
+                    <nav id="ferramentas" class="documento__ferramentas">
+                        <!-- <span class="documento__ferramenta">Novo</span> -->
+                        <span class="documento__ferramenta">Resetar</span>
                         <span class="documento__ferramenta">Salvar</span> 
                         |
                         <span class="documento__ferramenta">Pintar</span>
@@ -82,9 +84,15 @@
                     </nav>
                     <div class="documento__conteudo">
                         <div class="documento__conteudo__edicao">
-                            <canvas></canvas>
+                            <canvas id="canvas"></canvas>
                         </div>
-                        <div class="documento__conteudo__ferramentas">
+                        <div id="tilesheetmenu" class="documento__conteudo__ferramentas hidden">
+                            <span>
+                                Spritesheet:<select id="tilesheets_name" name="tilesheets_name"></select>
+                            </span>
+                            <ul id="tilesheets_box"></ul>
+                        </div>
+                        <div id="tilesheetactions" class="documento__conteudo__ferramentas hidden">
                             <span>
                                 Spritesheet:<select id="tilesheets_name" name="tilesheets_name"></select>
                             </span>
@@ -99,5 +107,8 @@
         </aside>
     </body>
     <script src="../scripts/loadobject.js"></script>
+    <script src="scripts/datafile.js"></script>
+    <script src="scripts/tilemap.js"></script>
+    <script src="scripts/tilesheet.js"></script>
     <script src="scripts/main.js"></script>
 </html>

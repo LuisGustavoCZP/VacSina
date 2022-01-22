@@ -1,6 +1,6 @@
 //import { TextParser, LoadHTMLText, LoadHTML, LoadXML, LoadJSON } from "../../scripts/loadobject.js";
 //import { SpriteFrame, SpriteSource, GOSprite, AnimatedSprite } from "../../scripts/gosprite.js";
-
+/* import { MapFile } from "./tilemap.js"; */
 var body = document.body;
 
 //#region Styles
@@ -33,63 +33,59 @@ function OnExitMenu(indice)
 {
     modalWindows[indice].classList.add("hidden");
 }
-const mapfile = document.getElementById("map-file");
-const tileCanvas = mapfile.querySelector(".documento__conteudo__edicao > canvas");
-const tileCtx = tileCanvas.getContext("2d");
-var zoom = 1;
-var tiletype = 0;
-var map;
-var sheet;
+
+var filenames = [];
+var files = [];
+
 function LoadMap (){
     const loadedMap = JSON.parse(this.responseText);
-    console.log(loadedMap);
-    map = loadedMap;
-    const maptitle = "map"+loadedMap.mapname+".json";
-    const titleEl = document.getElementById("arquivo-title");
-    
-    const aba = mapfile.querySelector(".documento__aba");
-    const tilesheetName = document.getElementById("tilesheets_name");
-    const tilesheetBox = document.getElementById("tilesheets_box");
-    
-    CreateSpriteOptions(tilesheetName, loadedMap.tilesheet);
-
-    titleEl.innerText = maptitle;
-    aba.children[0].innerText = maptitle;
-    aba.children[1].onclick = () => 
-    {
-        mapfile.classList.add("hidden");
-        titleEl.innerText = "";
-        window.location.search = "";
-    };
-    
-    CheckTiles ();
-    mapfile.classList.remove("hidden");
+    file = new MapFile(loadedMap);
+    files.push(file);
+    filenames.push(file.src)
+    console.log(file);
 }
 
 function LoadTSheet (){
-    const loadedMap = JSON.parse(this.responseText);
-    console.log(loadedMap);
-    map = loadedMap;
-    const maptitle = "tilesheet" + loadedMap.name + ".json";
+    const loadedSheet = JSON.parse(this.responseText);
+    console.log(loadedSheet);
+    sheet = loadedSheet;
+    const maptitle = "sheet_" + loadedSheet.name + ".json";
     const titleEl = document.getElementById("arquivo-title");
-    const mapfile = document.getElementById("map-file");
-    const aba = mapfile.querySelector(".documento__aba");
+    const datafile = document.getElementById("map-file");
+    const aba = datafile.querySelector(".documento__aba");
 
     const tilesheetName = document.getElementById("tilesheets_name");
     const tilesheetBox = document.getElementById("tilesheets_box");
     
-    CreateSpriteOptions(tilesheetName, loadedMap.tilesheet);
+    //CreateSpriteOptions(tilesheetName, loadedSheet.tilesheet);
 
     titleEl.innerText = maptitle;
     aba.children[0].innerText = maptitle;
     aba.children[1].onclick = () => 
     {
-        mapfile.classList.add("hidden");
+        datafile.classList.add("hidden");
         titleEl.innerText = "";
         window.location.search = "";
     };
+    
+    document.getElementById("tilesheetmenu").classList.add("hidden");
+    document.getElementById("tilesheetactions").classList.remove("hidden");  
 
-    mapfile.classList.remove("hidden");
+    if(!sheet.img) 
+    {
+        const srcpath = "/tilesheets/"+sheet.src;
+        sheet.img = new Image();
+        sheet.img.onload = () => 
+        {
+            DrawSheetTiles();
+        };
+        if(sheet.img.src == srcpath) return;
+        
+        console.log(sheet.src);
+        sheet.img.src = srcpath;
+    }
+
+    datafile.classList.remove("hidden");
 }
 
 function LoadParams () 
@@ -99,10 +95,9 @@ function LoadParams ()
     if(tilemap != undefined){
         const oReq = new XMLHttpRequest();
         oReq.onload = LoadMap;
-        
         oReq.open('POST', '/editor/loadmap');
         oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oReq.send("mapname="+tilemap);
+        oReq.send("name="+tilemap);
     }
 
     const tilesheet = urlparams.get("input-tilesheet");
@@ -136,46 +131,6 @@ function menuSelect (i, j)
 
 //#endregion
 //#region Mapa
-
-function CreateOption (title, value)
-{
-    const el = document.createElement("option");
-    el.textContent = title;
-    el.value = value;
-    return el;
-}
-
-function LoadSpritesheets (callback){
-    const oReq = new XMLHttpRequest();
-    oReq.onload = evt => {
-        const t = JSON.parse(evt.target.responseText);
-        const tilesheets = t.reduce ((p, o) =>
-        {
-            const substrings = o.split(".");
-            if(substrings[1] != "json") return p;
-            p.push({name:substrings[0], type:substrings[1]});
-            return p;
-        }, []);
-        callback(tilesheets);
-    };
-    oReq.open('GET', "/tilesheets");
-    oReq.send();
-}
-
-function CreateSpriteOptions (selectEl, defaultValue) {
-    LoadSpritesheets(ts => 
-    {
-        selectEl.innerHTML = "";
-        for (let i = 0; i < ts.length; i++)
-        {
-            const o = ts[i];
-            const v =  o.name+"."+o.type;
-            
-            selectEl.append(CreateOption(o.name, v));
-            if(defaultValue == v) selectEl.selectedIndex = i;
-        }
-    });   
-}
 
 function MenuTilemapCreate ()
 {   
@@ -320,7 +275,7 @@ function CreateTilesheet ()
 
                 for(let j = 0; j < maxColum; j++){
                     for(let i = 0; i < maxRow; i++){
-                    const id = i+(j*maxRow);
+                        const id = i+(j*maxRow);
                         tsData.tiles.push({id:id, block:false});
                     }
                 }
@@ -352,39 +307,6 @@ function CreateTilesheet ()
     fReader.readAsDataURL(k);
 }
 //#endregion
-
-function CheckTiles ()
-{
-    console.log(`${sheet?.name} != ${map.tilesheet}`);
-    if(!sheet || sheet.name+".json" != map.tilesheet)
-    {
-        const oReq = new XMLHttpRequest();
-        oReq.onload = (evt) => 
-        {
-            sheet = JSON.parse(evt.target.responseText);  
-            const srcpath = "/tilesheets/"+sheet.src;
-            console.log(sheet);
-            if(!sheet.img) 
-            {
-                sheet.img = new Image();
-                sheet.img.onload = () => 
-                {
-                    DrawTiles();
-                    CreateSheetItems ();
-                };
-            }
-            if(sheet.img.src == srcpath) return;
-            console.log(sheet.src);
-            sheet.img.src = srcpath;
-            //CheckTiles ();
-           
-        };
-
-        oReq.open('POST', '/editor/loadtilesheet');
-        oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oReq.send("name="+map.tilesheet);
-    }
-}
 
 function CreateSheetItems ()
 {
@@ -425,89 +347,23 @@ function CreateSheetItems ()
     }
 }
 
-function DrawTiles ()
+function DrawSheetTiles ()
 {
-    tileCanvas.width = sheet.size * zoom * Math.sqrt(map.tiles.length);
-    tileCanvas.height = tileCanvas.width;
-    tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
-    map.tiles.forEach(item => 
-    {
-        DrawTile(tileCanvas, tileCtx, item, sheet);
-    });
-}
-
-function DrawTile (canvas, context, tile, tsheet) {
-    const size = zoom * tsheet.size;
-    const hsize = size / 2;
-    const posX = (tile.x*size);
-    const posY = (tile.y*size);
-    const fw = tsheet.pixels;
-    const fs = tsheet.space;
-    //const cx = posX + (canvas.width/2), cy = posY + (canvas.height/2);
+    const tilesheetsList = document.getElementById("tilesheets_box");
+    tilesheetsList.innerHTML = ""; 
+    const ss = sheet.size * zoom;
+    const fw = sheet.pixels;
+    const fs = sheet.space;
     const nw = fw + fs;
-    const maxColum = Math.ceil((tsheet.img.width + fs) / (nw));
-    //console.log(this.spriteSheet.width + " " + this.maxColum + " " + this.x + " " + this.y);
-    const x = tile.type % maxColum, y = ((tile.type - x) / maxColum);
-    const fx = nw * x;
-    const fy = nw * y;
-    //console.log(tile);
-    //console.log(`hsize=${hsize} posX=${posX} posY=${posY} fw=${fw} fh=${fh} fs=${fs} fx=${fx} fy=${fy}`);
-    context.drawImage(
-        tsheet.img,
-        fx,
-        fy,
-        fw,
-        fw,
-        posX, 
-        posY,
-        size,
-        size
-    );
+    const maxColum = Math.ceil((sheet.img.width + fs) / (nw));
+    const maxRow = Math.ceil((sheet.img.height + fs) / (nw));
+    tileCanvas.width = maxColum * ss;
+    tileCanvas.height = maxRow * ss;
+    tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
+    for(let i = 0; i < sheet.tiles.length; i++)
+    {
+        const x = i % maxColum, y = ((i - x) / maxColum);
+        tileCtx.drawImage(sheet.img, x * nw, y * nw, fw, fw, x*ss, y*ss, ss, ss);
+    }
 }
 
-function ChangeZoom (evt) 
-{
-    evt.preventDefault();
-
-    zoom += evt.deltaY * -0.001;
-
-    // Restrict scale
-    zoom = Math.min(Math.max(.125, zoom), 4);
-    DrawTiles ();
-}
-tileCanvas.onwheel = ChangeZoom;
-
-function MapPosition (x, y) 
-{
-    const pos = tileCanvas.getBoundingClientRect();
-    const offsetX = - pos.left;
-    const offsetY = - pos.top;
-    
-    const pX = x+offsetX; //-(tileCanvas.width/2)
-    const pY = y+offsetY; //-(tileCanvas.height/2)
-
-    const nS = zoom * sheet.size;
-    const nX = parseInt(pX / nS);
-    const nY = parseInt(pY / nS);
-
-    //console.log(`Position(${nX}, ${nY})`);
-    return { "x":nX, "y":nY, "id":MapIndex(nX, nY)};
-}
-
-function MapIndex (x, y)
-{
-    const maxColum = Math.ceil(tileCanvas.width/(sheet.size*zoom));//Math.ceil((sheet.img.width + sheet.space) / (sheet.pixels + sheet.space));
-    return (y*maxColum) + x;
-}
-
-function PaintMap (e){
-    e.preventDefault();
-    const p = MapPosition(e.clientX, e.clientY);
-    console.log(`Pintando ${p.id} de ${tiletype}`);
-    const t = map.tiles[p.id];
-    console.log(map);
-    t.type = tiletype;
-    DrawTiles ();
-}
-
-tileCanvas.onclick = PaintMap;
