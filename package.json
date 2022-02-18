@@ -1,0 +1,22 @@
+{
+  "name": "vacsina",
+  "version": "1.0.0",
+  "description": "Jogo Web/Unity para ressaltar a importancia da vacina",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisGustavoCZP/VacSina.git"
+  },
+  "author": "Luis Gustavo C. Z. Pereira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisGustavoCZP/VacSina/issues"
+  },
+  "homepage": "https://github.com/LuisGustavoCZP/VacSina#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

@@ -1,0 +1,35 @@
+[
+    {
+        "type":"character",
+        "name":"Tobias",
+        "sprite": {
+            "frame": { "height":32, "width":32, "space":0 },
+            "anim": 
+            { 
+                "vertical": true,
+                "sequences":
+                { 
+                    "idle":[0, 1],
+                    "walk":[2, 3, 4, 5, 6],
+                    "run":[6, 7, 8, 9, 10],
+                    "jump":[10, 11, 12, 13, 14, 15, 16, 17]
+                } 
+            },
+            "src":"../sprites/character/Character_Skintones.png",
+            "id":0
+        },
+        "transform": {
+            "size":4,
+            "positionX": 0,
+            "positionY": 0,
+            "rotation":0
+        },
+        "physics":{
+            "isTrigger":false
+        },
+        "dynamic":{
+            "speedRotation": 2,
+            "speed": 1
+        }
+    }
+]
