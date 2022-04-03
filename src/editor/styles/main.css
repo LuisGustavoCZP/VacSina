@@ -141,7 +141,7 @@ td > div > img {
 
 li > span > img {
     display: flex;
-    padding-right: 5px;
+    margin-right: 5px;
     vertical-align: text-bottom;
 
     width: 15px;

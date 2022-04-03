@@ -100,6 +100,7 @@ class DataFile
     }
 }
 
+export { DataFile };
 /* function ZoomScript (event) {
     const lastZoom = zoom;
     zoom += evt.deltaY * -0.001;

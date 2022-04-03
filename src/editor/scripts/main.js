@@ -1,7 +1,12 @@
 //import { TextParser, LoadHTMLText, LoadHTML, LoadXML, LoadJSON } from "../../scripts/loadobject.js";
 //import { SpriteFrame, SpriteSource, GOSprite, AnimatedSprite } from "../../scripts/gosprite.js";
 /* import { MapFile } from "./tilemap.js"; */
-var body = document.body;
+import { LoadSys } from "../../scripts/loadsys.js";
+import { RequestSys } from "../../scripts/requestsys.js";
+import { SheetFile, LoadSpritesheets, CreateSpriteOptions, CreateOption } from "./tilesheet.js";
+import { MapFile } from "./tilemap.js";
+
+const body = document.body;
 
 //#region Styles
 var estiloLink = document.getElementById("estilo");
@@ -17,11 +22,7 @@ function OnClickEstilo(indice)
 }
 //#endregion
 //#region Menu 
-var modalWindows = 
-[
-    document.getElementById("menu-ficheiro"),
-    document.getElementById("menu-editar")
-];
+
 var modalPosX = 0;
 function OnEnterMenu(indice)
 {
@@ -34,31 +35,36 @@ function OnExitMenu(indice)
     modalWindows[indice].classList.add("hidden");
 }
 
+//var zoom = 1;
 var filenames = [];
 var files = [];
 
-function LoadMap (){
-    const loadedMap = JSON.parse(this.responseText);
-    file = new MapFile(loadedMap);
+function LoadMap (data){
+    //const loadedMap = JSON.parse(this.responseText);
+    const file = new MapFile(data);
     files.push(file);
     filenames.push(file.src)
     console.log(file);
 }
 
-function LoadTSheet (){
-    const loadedSheet = JSON.parse(this.responseText);
-    console.log(loadedSheet);
-    sheet = loadedSheet;
-    const maptitle = "sheet_" + loadedSheet.name + ".json";
+function LoadTSheet (data){
+    //const loadedSheet = JSON.parse(this.responseText);
+    console.log(data);
+    const sheetfile = new SheetFile(data);
+    console.log(sheetfile);
+    //sheetfile.Draw();
+
+    const sheet = data;
+    const maptitle = "sheet_" + sheet.name + ".json";
     const titleEl = document.getElementById("arquivo-title");
-    const datafile = document.getElementById("map-file");
+    const datafile = document.getElementById("data-file");
     const aba = datafile.querySelector(".documento__aba");
 
     const tilesheetName = document.getElementById("tilesheets_name");
     const tilesheetBox = document.getElementById("tilesheets_box");
     
     //CreateSpriteOptions(tilesheetName, loadedSheet.tilesheet);
-
+    
     titleEl.innerText = maptitle;
     aba.children[0].innerText = maptitle;
     aba.children[1].onclick = () => 
@@ -70,22 +76,22 @@ function LoadTSheet (){
     
     document.getElementById("tilesheetmenu").classList.add("hidden");
     document.getElementById("tilesheetactions").classList.remove("hidden");  
-
+    /*
     if(!sheet.img) 
     {
-        const srcpath = "/tilesheets/"+sheet.src;
+        const srcpath = RequestSys.URL()+"/tilesheets/"+sheet.src;
         sheet.img = new Image();
         sheet.img.onload = () => 
         {
-            DrawSheetTiles();
+            DrawSheetTiles(sheet);
         };
         if(sheet.img.src == srcpath) return;
         
         console.log(sheet.src);
         sheet.img.src = srcpath;
-    }
+    }*/
 
-    datafile.classList.remove("hidden");
+    datafile.classList.remove("hidden"); 
 }
 
 function LoadParams () 
@@ -93,28 +99,30 @@ function LoadParams ()
     const urlparams = new URLSearchParams(window.location.search);
     const tilemap = urlparams.get("input-tilemap");
     if(tilemap != undefined){
-        const oReq = new XMLHttpRequest();
+        RequestSys.get(`/editor/loadmap/?name=${tilemap}`, LoadMap);
+        /* const oReq = new XMLHttpRequest();
         oReq.onload = LoadMap;
         oReq.open('POST', '/editor/loadmap');
         oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oReq.send("name="+tilemap);
+        oReq.send("name="+tilemap); */     
     }
 
     const tilesheet = urlparams.get("input-tilesheet");
     if(tilesheet != undefined){
-        const oReq = new XMLHttpRequest();
+        RequestSys.get(`/editor/loadtilesheet/?name=${tilesheet}`, LoadTSheet);
+        /* const oReq = new XMLHttpRequest();
         oReq.onload = LoadTSheet;
         
         oReq.open('POST', '/editor/loadtilesheet');
         oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oReq.send("name="+tilesheet);
+        oReq.send("name="+tilesheet); */
     }
 
     //console.log(tilemap);
 }
 LoadParams ();
 
-var menuSelections = 
+const menuSelections = 
 [
     [
         MenuTilemapCreate,
@@ -136,8 +144,9 @@ function MenuTilemapCreate ()
 {   
     let popupWindow = document.createElement("div");
     popupWindow.classList.add("menu__windowbox");
-    LoadHTML("mapcreation.html", x => 
+    LoadSys.toHTML("mapcreation.html", x => 
     {
+        x = x.body;
         CreateSpriteOptions(x.querySelector("select"), undefined);
 
         x.querySelector("#cancelbutton").onclick = x => {CancelCreateMapa(popupWindow);};
@@ -151,14 +160,14 @@ function MenuTilemapLoad ()
 {   
     let popupWindow = document.createElement("div");
     popupWindow.classList.add("menu__windowbox");
-    LoadHTML("maploading.html", x => 
+    LoadSys.toHTML("maploading.html", x => 
     {
-        const oReq = new XMLHttpRequest();
-        oReq.onload = evt => {
-            const t = JSON.parse(evt.target.responseText);
+        x = x.body;
+        RequestSys.get("/tilemaps", data => 
+        {
             const tsBox = x.querySelector("select");
             tsBox.innerHTML = "";
-            const mapNames = t.reduce ((p, o) =>
+            const mapNames = data.reduce ((p, o) =>
             {
                 const substrings = o.split(".");
                 if(substrings[1] != "json") return p;
@@ -171,11 +180,9 @@ function MenuTilemapLoad ()
                 //console.log(o);
                 tsBox.append(CreateOption(o.name, o.name+"."+o.type));
             }
-        };
-        oReq.open('GET', "/tilemaps");
-        oReq.send();
+        });
 
-        x.querySelector("#cancelbutton").onclick = x => {CancelCreateMapa(popupWindow);};
+        x.querySelector("#cancelbutton").onclick = e => {CancelCreateMapa(popupWindow);};
         popupWindow.append(x);
     });
     body.insertBefore(popupWindow, body.firstChild);
@@ -186,8 +193,9 @@ function MenuTilesheetCreate ()
 {   
     let popupWindow = document.createElement("div");
     popupWindow.classList.add("menu__windowbox");
-    LoadHTML("tilesheetcreation.html", x => 
+    LoadSys.toHTML("tilesheetcreation.html", x => 
     {
+        x = x.body;
         x.querySelector("#cancelbutton").onclick = x => {CancelCreateMapa(popupWindow);};
         popupWindow.append(x);
     });
@@ -199,14 +207,15 @@ function MenuTilesheetLoad ()
 {   
     let popupWindow = document.createElement("div");
     popupWindow.classList.add("menu__windowbox");
-    LoadHTML("tilesheetloading.html", x => 
+    LoadSys.toHTML("tilesheetloading.html", x => 
     {
-        const oReq = new XMLHttpRequest();
-        oReq.onload = evt => {
-            const t = JSON.parse(evt.target.responseText);
+        x = x.body; 
+        RequestSys.get("/tilesheets", data => 
+        {
+            //const t = JSON.parse(evt.target.responseText);
             const tsBox = x.querySelector("select");
             tsBox.innerHTML = "";
-            const mapNames = t.reduce ((p, o) =>
+            const mapNames = data.reduce ((p, o) =>
             {
                 const substrings = o.split(".");
                 if(substrings[1] != "json") return p;
@@ -219,9 +228,7 @@ function MenuTilesheetLoad ()
                 //console.log(o);
                 tsBox.append(CreateOption(o.name, o.name+"."+o.type));
             }
-        };
-        oReq.open('GET', "/tilesheets");
-        oReq.send();
+        });
 
         x.querySelector("#cancelbutton").onclick = x => {CancelCreateMapa(popupWindow);};
         popupWindow.append(x);
@@ -347,23 +354,75 @@ function CreateSheetItems ()
     }
 }
 
-function DrawSheetTiles ()
+function DrawSheetTiles (sheet)
 {
-    const tilesheetsList = document.getElementById("tilesheets_box");
-    tilesheetsList.innerHTML = ""; 
-    const ss = sheet.size * zoom;
-    const fw = sheet.pixels;
-    const fs = sheet.space;
-    const nw = fw + fs;
-    const maxColum = Math.ceil((sheet.img.width + fs) / (nw));
-    const maxRow = Math.ceil((sheet.img.height + fs) / (nw));
-    tileCanvas.width = maxColum * ss;
-    tileCanvas.height = maxRow * ss;
-    tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
-    for(let i = 0; i < sheet.tiles.length; i++)
-    {
-        const x = i % maxColum, y = ((i - x) / maxColum);
-        tileCtx.drawImage(sheet.img, x * nw, y * nw, fw, fw, x*ss, y*ss, ss, ss);
-    }
+    
 }
 
+const modalWindows = [];
+
+function initialize () 
+{
+    LoadSys.toJSON("/data/menuferramenta.json", 
+    (ferramentaCategories) => 
+    {
+        const menu = document.querySelector(".menu");
+        ferramentaCategories.forEach((ferramentaCategory, ci) => 
+        {
+            const ferCat = document.createElement("span");
+            ferCat.classList.add("menu__ferramenta");
+            ferCat.onpointerdown = () => { OnEnterMenu(ci); };
+            ferCat.onpointerleave = () => { OnExitMenu(ci); };
+            menu.append(ferCat);
+
+            const ferCatTitle = document.createElement("span");
+            ferCatTitle.innerText = ferramentaCategory.name;
+            ferCatTitle.classList.add("menu__ferramenta_title");
+            ferCat.append(ferCatTitle);
+
+            const ferCatList = document.createElement("ul");
+            ferCatList.id = ferramentaCategory.id;
+            ferCatList.classList.add("menu__modalbox");
+            ferCatList.classList.add("hidden");
+            ferCat.append(ferCatList);
+            modalWindows.push(ferCatList);
+
+            ferramentaCategory.ferramentas.forEach((ferramenta, i) => 
+            {
+                const ferEl = document.createElement("li");
+                ferEl.onclick = () => { menuSelect(ci, i) };
+                ferCatList.append(ferEl);
+
+                const ferElBox = document.createElement("span");
+                ferElBox.classList.add("menu__modalbox__ferramenta");
+                ferEl.append(ferElBox);
+
+                const ferElImg = document.createElement("img");
+                ferElImg.src = ferramenta.icon;
+                ferElBox.append(ferElImg);
+
+                const ferElTitle = document.createElement("span");
+                ferElTitle.innerText = ferramenta.name;
+                ferElBox.append(ferElTitle);
+            });
+            /* menu.innerHTML = `
+            <span class="menu__ferramenta">
+                <span style="text-decoration: underline;">E</span>ditar
+                <ul id="menu-editar" class="">
+                    <li onclick="">
+                        <span class="menu__modalbox__ferramenta">
+                            <img src="images/aula14ex2screenshot2.png" />
+                            <span>Desfazer</span>
+                        </span>
+                    </li>
+                </ul>
+            </span>`; */
+        });
+        /* console.log(ferramentas);
+        const menuferramenta = document.querySelector("menu_ferramentas");
+        menuferramenta.onpointerdown = OnEnterMenu(1);
+        menuferramenta.onpointerleave = OnExitMenu(1); */
+    });
+}
+
+initialize ();

@@ -1,5 +1,8 @@
-/* import { DataFile } from "./datafile.js";
-export */ 
+import { RequestSys } from "../../scripts/requestsys.js";
+import { DataFile } from "./datafile.js";
+import { CreateSpriteOptions } from "./tilesheet.js";
+
+
 class MapFile extends DataFile 
 {
     paintDrag = false;
@@ -38,15 +41,15 @@ class MapFile extends DataFile
         console.log(`${this.sheet?.name} != ${sheetName}`);
         if(!this.sheet || this.sheet.name+".json" != sheetName)
         {
-            const oReq = new XMLHttpRequest();
-            oReq.onload = (evt) => 
+            RequestSys.get(`/editor/loadtilesheet/?name=${sheetName}`, (data)=>
             {
-                this.sheet = JSON.parse(evt.target.responseText);  
-                const srcpath = "/tilesheets/"+this.sheet.src;
+                this.sheet = data;  
+                const srcpath = RequestSys.URL()+"/tilesheets/"+this.sheet.src;
                 console.log(this.sheet);
                 if(!this.sheet.img) 
                 {
                     this.sheet.img = new Image();
+                    this.sheet.img.crossOrigin="anonymous";
                     this.sheet.img.onload = () => 
                     {
                         this.Draw();
@@ -56,11 +59,7 @@ class MapFile extends DataFile
                 if(this.sheet.img.src == srcpath) return;
                 console.log(this.sheet.src);
                 this.sheet.img.src = srcpath;
-            };
-    
-            oReq.open('POST', '/editor/loadtilesheet');
-            oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            oReq.send("name="+sheetName);
+            });
         }
     }
 
@@ -133,6 +132,7 @@ class MapFile extends DataFile
             const icon = t_canvas.toDataURL();
             const liImg = document.createElement("img");
             liImg.src = icon;
+            
             //console.log(icon);
             li.append(liImg);
             const n = i;
@@ -192,19 +192,12 @@ class MapFile extends DataFile
     {
         super.Save();
         console.log(this.data);
-        fetch("/editor/modmap", 
+        RequestSys.post("/editor/modmap", {"tiles":this.data.tiles, "name":this.data.name}, (data)=>
         {
-            method: 'post',
-            body: JSON.stringify({"tiles":this.data.tiles, "name":this.data.name}),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        //.then((resp) => resp.json())
-        .then(function (_data) {
-            console.log(`Salvamento concluido: ${_data.sucess}`);
-        })
-        .catch(function (error) {
-            console.log('Request failed', error);
+            console.log(`Salvamento concluido: ${data.sucess}`);
         });
     }
 
 }
+
+export { MapFile };

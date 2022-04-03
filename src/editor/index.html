@@ -18,7 +18,7 @@
             <span id="arquivo-title" class="arquivo">empty</span>
         </header>
         <nav class="menu" style="display:flex; flex-direction: row;">
-            <span class="menu__ferramenta" onpointerdown="OnEnterMenu(0)" onpointerleave="OnExitMenu(0)">
+            <!--<span class="menu__ferramenta" onpointerdown="OnEnterMenu(0)" onpointerleave="OnExitMenu(0)">
                 <span style="text-decoration: underline;">F</span>icheiro
                 <ul id="menu-ficheiro" class="menu__modalbox hidden">
                     <li onclick="menuSelect(0, 0)">
@@ -47,7 +47,7 @@
                     </li>
                 </ul>
             </span>
-            <span class="menu__ferramenta" onpointerdown="OnEnterMenu(1)" onpointerleave="OnExitMenu(1)">
+            <span class="menu__ferramenta">
                 <span style="text-decoration: underline;">E</span>ditar
                 <ul id="menu-editar" class="menu__modalbox hidden">
                     <li onclick="menuSelect(1, 0)">
@@ -57,7 +57,7 @@
                         </span>
                     </li>
                 </ul>
-            </span>
+            </span>-->
             <!--<span class="menu__ferramenta" ><span style="text-decoration: underline;">V</span>er</span>
             <span class="menu__ferramenta" ><span style="text-decoration: underline;">M</span>undo</span>
             <span class="menu__ferramenta" ><span style="text-decoration: underline;">M</span>apa</span>
@@ -106,9 +106,6 @@
            
         </aside>
     </body>
-    <script src="../scripts/loadobject.js"></script>
-    <script src="scripts/datafile.js"></script>
-    <script src="scripts/tilemap.js"></script>
-    <script src="scripts/tilesheet.js"></script>
-    <script src="scripts/main.js"></script>
+    <!-- <script src="../scripts/loadobject.js"></script> -->
+    <script type="module" src="scripts/main.js"></script>
 </html>

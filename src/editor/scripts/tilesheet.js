@@ -1,10 +1,26 @@
+import { RequestSys } from "../../scripts/requestsys.js";
+import { DataFile } from "./datafile.js";
 /* import { DataFile } from "./datafile.js";
 export */ 
+
 class SheetFile extends DataFile 
 {
     constructor (_data) {
         super(_data);
         this.src = `sheet_${_data.name}.json`;
+        if(!this.img) 
+        {
+            const srcpath = RequestSys.URL()+"/tilesheets/"+this.data.src;
+            this.img = new Image();
+            this.img.onload = () => 
+            {
+                this.Draw();
+            };
+            if(this.img.src == srcpath) return;
+            
+            //console.log(this.src);
+            this.img.src = srcpath;
+        }
     }
 
     LoadData (_data) {
@@ -19,13 +35,38 @@ class SheetFile extends DataFile
         this.canvas.onpointerdown = (evt) => {this.paintDrag = true;};
         this.canvas.onpointermove = (evt) => {this.ControlerMove(evt)};
     }
+
+    Draw () 
+    {
+        super.Draw();
+        const tilesheetsList = document.getElementById("tilesheets_box");
+        tilesheetsList.innerHTML = ""; 
+        
+        console.log(this);
+        const ss = this.size * this.zoom;
+        const fw = this.pixels;
+        const fs = this.space;
+        const nw = fw + fs;
+        const maxColum = Math.ceil((this.img.width + fs) / (nw));
+        const maxRow = Math.ceil((this.img.height + fs) / (nw));
+        this.canvas.width = maxColum * ss;
+        this.canvas.height = maxRow * ss;
+        const ctx = this.canvas.getContext("2d");
+        ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+        for(let i = 0; i < this.data.tiles.length; i++)
+        {
+            const x = i % maxColum, y = ((i - x) / maxColum);
+            ctx.drawImage(this.img, x * nw, y * nw, fw, fw, x*ss, y*ss, ss, ss);
+        }
+    }
 }
 
 function LoadSpritesheets (callback){
-    const oReq = new XMLHttpRequest();
-    oReq.onload = evt => {
-        const t = JSON.parse(evt.target.responseText);
-        const tilesheets = t.reduce ((p, o) =>
+    RequestSys.get("/tilesheets", (data) => 
+    {
+        console.log(data);
+        //const t = JSON.parse(evt.target.responseText);
+        const tilesheets = data.reduce ((p, o) =>
         {
             const substrings = o.split(".");
             if(substrings[1] != "json") return p;
@@ -33,9 +74,7 @@ function LoadSpritesheets (callback){
             return p;
         }, []);
         callback(tilesheets);
-    };
-    oReq.open('GET', "/tilesheets");
-    oReq.send();
+    });
 }
 
 function CreateSpriteOptions (selectEl, defaultValue) {
@@ -60,3 +99,5 @@ function CreateOption (title, value)
     el.value = value;
     return el;
 }
+
+export { SheetFile, LoadSpritesheets, CreateSpriteOptions, CreateOption };

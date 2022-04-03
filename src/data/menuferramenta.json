@@ -1,0 +1,30 @@
+[
+    {
+        "name":"Ficheiro",
+        "id":"menu-ficheiro",
+        "script":"menuficheiro.js",
+        "ferramentas":
+        [
+            {
+                "name":"Novo Mapa",
+                "icon":"/images/icons/add.png",
+                "action":"MenuTilemapCreate"
+            },
+            {
+                "name":"Abrir Mapa",
+                "icon":"/images/icons/edit.png",
+                "action":"MenuTilemapLoad"
+            },
+            {
+                "name":"Novo Tilesheet",
+                "icon":"/images/icons/add.png",
+                "action":"MenuTilesheetCreate"
+            },
+            {
+                "name":"Abrir Tilesheet",
+                "icon":"/images/icons/edit.png",
+                "action":"MenuTilesheetLoad"
+            }
+        ]
+    }
+]
