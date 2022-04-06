@@ -5,11 +5,13 @@
 }
 
 body {
+    /* display: flex; */
     display: block;
     position: relative;
     border: 1px; border-style: solid; 
     border-collapse:collapse;
     height: 100vh;
+    /* flex-direction: column; */
 }
 
 header {
@@ -244,8 +246,4 @@ li > span > img {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-}
-
-.hidden {
-    display: none;
 }

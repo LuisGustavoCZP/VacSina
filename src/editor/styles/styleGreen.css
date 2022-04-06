@@ -65,7 +65,7 @@ td > div > img {
     background-color: var(--white);
 }
 
-.menu__windowbox__container > div > form {
+.menu__windowbox__container > div > div, form {
     background-color: var(--maincolor4);
 }
 

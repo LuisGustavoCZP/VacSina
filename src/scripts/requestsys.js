@@ -17,7 +17,13 @@ function requestSys (url=ortoPath+":8000") //"https://vacsina.servegame.com:8000
         {
             method: 'get',
             mode: 'cors',
-            headers: { 'Content-Type': 'application/json' }
+            headers: 
+            { 
+                'Content-Type': 'application/json', 
+                'Access-Control-Allow-Origin':"http://localhost:8080",
+                'Access-Control-Allow-Credentials':true,
+            },
+            credentials:'include'
         })
         .then((resp) => resp.json())
         .then(sucess)
@@ -31,7 +37,13 @@ function requestSys (url=ortoPath+":8000") //"https://vacsina.servegame.com:8000
             method: 'post',
             body: JSON.stringify(body),
             mode: 'cors',
-            headers: { 'Content-Type': 'application/json' }
+            headers: 
+            { 
+                'Content-Type': 'application/json', 
+                'Access-Control-Allow-Origin':"http://localhost:8080",
+                'Access-Control-Allow-Credentials':true,
+            },
+            credentials:'include'
         })
         .then((resp) => resp.json())
         .then(sucess)

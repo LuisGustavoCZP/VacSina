@@ -2,26 +2,41 @@
 <html>
     <head>
         <title>Lovelace RPG</title>
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/style.css" />
+        <link rel="stylesheet" href="styles/pattern.css" />
     </head>
     <body>
         <header>
             <h1>Lovelace RPG</h1>
         </header>
         <main>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="game/index.html" target="_self">Start</a>
-                    </li>
-                    <li>
-                        <a href="game/index.html" target="_self">Load</a>
-                    </li>
-                    <li>
-                        <a href="editor/index.html" target="_self">Editor</a>
-                    </li>
-                </ul>
-            </nav>
+            <section><!--class="hidden"-->
+                <h2>Login</h2>
+                <form action="" method="post">
+                    <label for="input-user">User</label>
+                    <input type="text" name="login-user" id="input-user" pattern="[^a-z]+" required />
+                    <label for="input-user">Password</label>
+                    <input type="password" name="login-pass" id="input-pass" pattern="[^a-z]+" required />
+                    <button type="button" id="login-button">Login</button>
+                </form>
+                <script type="module" src="scripts/index.js"></script>
+            </section>
+            <section class="hidden">
+                <h2>Menu</h2>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="game/index.html" target="_self">Start</a>
+                        </li>
+                        <li>
+                            <a href="game/index.html" target="_self">Load</a>
+                        </li>
+                        <li>
+                            <a href="editor/index.html" target="_self">Editor</a>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
         </main>
     </body>
 </html>
